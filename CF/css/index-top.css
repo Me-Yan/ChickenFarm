@@ -1,0 +1,11 @@
+.navbar-top-links {
+
+}
+.navbar-top-links li a {
+	display: block;
+	text-align: center;
+	color: #337ab7;
+}
+.navbar-top-links .dropdown-alerts {
+	width: 150px;
+}
