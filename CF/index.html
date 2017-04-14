@@ -142,8 +142,9 @@
             </div>
         </nav>
 
+        <!-- 内嵌响应网页 -->
         <div id="page-wrapper">
-            <iframe id="index-right" src="homePage.html" width="100%" height="100%" frameborder="0" onload="changeFrameHeight()" scrolling="auto"></iframe>
+            <iframe id="index-right" src="dashboard.html" width="100%" height="100%" frameborder="0" onload="changeFrameHeight()" scrolling="auto"></iframe>
         </div>
 
     </div>
@@ -159,24 +160,36 @@
           <div class="modal-body">
             <form action="#">
               <div class="form-group">
-                <label for="exampleInputEmail1">Email address</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+                <label for="one-date">日期</label>
+                <input type="text" name="" class="form-control" id="one-date" data-date-format="yyyy-mm-dd" readonly />
               </div>
               <div class="form-group">
-                <label for="exampleInputPassword1">Password</label>
-                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                <label for="one-classify">一级分类</label>
+                <select name="classify" class="form-control" id="one-classify">
+                    <option value="">鸡蛋</option>
+                    <option value="">鸡房</option>
+                    <option value="">日常</option>
+                </select>
               </div>
               <div class="form-group">
-                <label for="exampleInputFile">File input</label>
-                <input type="file" id="exampleInputFile">
-                <p class="help-block">Example block-level help text here.</p>
+                  <label for="one-category">二级分类</label>
+                  <select name="category" id="one-category" class="form-control">
+                      <option value="">重量</option>
+                      <option value="">单价</option>
+                      <option value="">收入</option>
+                      <option value="">死亡</option>
+                      <option value="">欠款</option>
+                      <option value="">还款</option>
+                  </select>
               </div>
-              <div class="checkbox">
-                <label>
-                  <input type="checkbox"> Check me out
-                </label>
+              <div class="form-group">
+                  <label for="one-value">数量</label>
+                  <input type="text" name="" class="form-control" id="one-value" />
               </div>
-              <button type="submit" class="btn btn-default">Submit</button>
+              <div class="form-group">
+                  <label for="one-desc">备注</label>
+                  <input type="text" name="" class="form-control" id="one-desc" />
+              </div>              
             </form>
           </div>
           <div class="modal-footer">
@@ -196,7 +209,32 @@
             <h4 class="modal-title">售卖</h4>
           </div>
           <div class="modal-body">
-            <p>One fine body&hellip;</p>
+            <form>
+              <div class="form-group">
+                <label for="more-date">日期</label>
+                <input type="text" name="" class="form-control" id="more-date" data-date-format="yyyy-mm-dd" readonly />
+              </div>
+              <div class="form-group">
+                <label for="more-weight">重量</label>
+                <input type="text" class="form-control" id="more-weight">
+              </div>
+              <div class="form-group">
+                <label for="more-price">单价</label>
+                <input type="text" class="form-control" id="mroe-price">
+              </div>
+              <div class="form-group">
+                <label for="more-amount">金额</label>
+                <input type="text" class="form-control" id="more-amount" readonly>
+              </div>
+              <div class="form-group">
+                <label for="more-actual-amount">实际金额</label>
+                <input type="text" class="form-control" id="more-actual-amount">
+              </div>
+              <div class="form-group">
+                  <label for="more-desc">备注</label>
+                  <input type="text" name="" class="form-control" id="more-desc" />
+              </div>              
+            </form>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
@@ -215,11 +253,33 @@
             <h4 class="modal-title">个人信息</h4>
           </div>
           <div class="modal-body">
-            <p>One fine body&hellip;</p>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-            <button type="button" class="btn btn-primary">确认</button>
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-xs-5 text-right">用户名：</div>
+                <div class="col-xs-2"></div>
+                <div class="col-xs-5 text-left">Me</div>
+              </div>
+              <div class="row">
+                <div class="col-xs-5 text-right">权限：</div>
+                <div class="col-xs-2"></div>
+                <div class="col-xs-5 text-left">超级管理员</div>
+              </div>
+              <div class="row">
+                <div class="col-xs-5 text-right">性别：</div>
+                <div class="col-xs-2"></div>
+                <div class="col-xs-5 text-left">男</div>
+              </div>
+              <div class="row">
+                <div class="col-xs-5 text-right">手机号码：</div>
+                <div class="col-xs-2"></div>
+                <div class="col-xs-5 text-left">18380448173</div>
+              </div>
+              <div class="row">
+                <div class="col-xs-5 text-right">邮箱：</div>
+                <div class="col-xs-2"></div>
+                <div class="col-xs-5 text-left">875649210@qq.com</div>
+              </div>
+            </div>
           </div>
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
@@ -234,7 +294,42 @@
             <h4 class="modal-title">编辑</h4>
           </div>
           <div class="modal-body">
-            <p>One fine body&hellip;</p>
+            <form>
+              <div class="form-group">
+                <label for="username">用户名</label>
+                <input type="text" class="form-control" id="username" placeholder="username">
+              </div>
+              <div class="form-group">
+                <label for="reset-password">重置密码</label>
+                <select name="resetI" class="form-control" id="reset-password">
+                  <option value="0">否</option>
+                  <option value="1">是</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="username">密码</label>
+                <input type="password" class="form-control" id="password" placeholder="password">
+              </div>
+              <div class="form-group">
+                <label for="confirm-password">确认密码</label>
+                <input type="password" class="form-control" id="confirm-password">
+              </div>
+              <div class="form-group">
+                <label for="sex">性别</label>
+                <select class="form-control" id="sex">
+                  <option value="0">男</option>
+                  <option value="1">女</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="username">手机号码</label>
+                <input type="phone" class="form-control" id="phone" placeholder="phone">
+              </div>
+              <div class="form-group">
+                <label for="email">邮箱</label>
+                <input type="email" class="form-control" id="email" placeholder="email">
+              </div>
+            </form>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
@@ -253,7 +348,7 @@
             <h4 class="modal-title">退出</h4>
           </div>
           <div class="modal-body">
-            <p>One fine body&hellip;</p>
+            <p class="text-center logout-tip">你确定要退出吗？</p>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
@@ -269,8 +364,10 @@
 
     <script src="plugins/jquery/jquery-3.2.0.min.js"></script>
     <script src="plugins/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
-    <script src="js/index.js"></script>
+    <script src="js/sb-bootstrap.js"></script>
     <script src="js/metisMenu.min.js"></script>
+    <script src="plugins/datetimepicker/bootstrap-datetimepicker.min.js"></script>
+    <script src="plugins/datetimepicker/bootstrap-datetimepicker.zh-CN.js"></script>
 
     <script type="text/javascript">
         function changeFrameHeight() {
@@ -280,6 +377,19 @@
         window.onresize = function () {
             changeFrameHeight();
         }
+
+
+        var dtOptions = {
+            format: 'yyyy-mm-dd',
+            autoclose: true,
+            minView: 2,
+            endDate: new Date(new Date().getTime()-24*60*60*1000),
+            language: "zh-CN"
+        };
+        // 单条记录数据追加-日期
+        $('#one-date').datetimepicker(dtOptions);
+        // 销售记录追加-日期
+        $('#more-date').datetimepicker(dtOptions);
     </script>
 
 </body>
