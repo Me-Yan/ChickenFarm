@@ -17,3 +17,7 @@
 .logout-tip {
 	font-size: 25px;
 }
+#page-wrapper {
+	margin-top: 50px;
+	padding-right: 0px;
+}

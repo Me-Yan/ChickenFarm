@@ -10,6 +10,7 @@
     <meta name="author" content="严杨鸿">
 
     <title>锦昱企业</title>
+    <script src="plugins/jquery/jquery-3.2.0.min.js"></script>
 
     <link href="plugins/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -17,14 +18,29 @@
     <link href="css/metisMenu.min.css" rel="stylesheet">
     <link href="css/index-top.css" rel="stylesheet">
 
+    <script type="text/javascript">
+      function changeFrameHeight() {
+          var ifm = document.getElementById("index-right");
+          ifm.height = document.documentElement.clientHeight;
+      }
+      window.onresize = function () {
+          changeFrameHeight();
+      }
+
+      $('#index-right').height($(window).height() - $('#index-top').height());
+      $(window).resize(function () {
+          $('#index-right').height($(window).height() - $('#index-top').height());
+      });
+    </script>
+
 </head>
 
-<body>
+<body style="overflow-y: hidden;">
 
     <div id="wrapper">
 
         <!-- Navigation -->
-        <nav class="navbar navbar-default navbar-fixed-top" role="navigation" style="margin-bottom: 0">
+        <nav class="navbar navbar-default navbar-fixed-top" id="index-top" role="navigation" style="margin-bottom: 0">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="sr-only">Toggle navigation</span>
@@ -102,38 +118,58 @@
                         <li>
                             <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> 鸡蛋<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
-                                <li><a href="#">重量</a></li>
-                                <li><a href="#">单价</a></li>
-                                <li><a href="#">收入</a></li>                                
-                                <li><a href="#">死亡</a></li>
-                                <li><a href="#">欠款</a></li>
-                                <li><a href="#">还款</a></li>
+                                <li><a href="html/weight.html" target="index-right">重量</a></li>
+                                <li><a href="html/weight.html" target="index-right">单价</a></li>
+                                <li><a href="html/weight.html" target="index-right">收入</a></li>                                
+                                <li><a href="html/weight.html" target="index-right">死亡</a></li>
+                                <li><a href="html/weight.html" target="index-right">欠款</a></li>
+                                <li><a href="html/weight.html" target="index-right">还款</a></li>
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
                         <li>
                             <a href="#"><i class="fa fa-leaf fa-fw"></i> 鸡房<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
-                                <li><a href="#">饲料</a></li>
-                                <li><a href="#">疫苗</a></li>
-                                <li><a href="#">房租</a></li>
-                                <li><a href="#">鸡屎</a></li>
-                                <li><a href="#">药物</a></li>
-                                <li><a href="#">设备维护</a></li>
+                                <li><a href="html/weight.html" target="index-right">饲料</a></li>
+                                <li><a href="html/weight.html" target="index-right">疫苗</a></li>
+                                <li><a href="html/weight.html" target="index-right">房租</a></li>
+                                <li><a href="html/weight.html" target="index-right">鸡屎</a></li>
+                                <li><a href="html/weight.html" target="index-right">药物</a></li>
+                                <li><a href="html/weight.html" target="index-right">设备维护</a></li>
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
                         <li>
                             <a href="#"><i class="fa fa-sitemap fa-fw"></i> 日常<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
-                                <li><a href="#">水费</a></li>
-                                <li><a href="#">电费</a></li>
-                                <li><a href="#">网费</a></li>
-                                <li><a href="#">话费</a></li>
-                                <li><a href="#">油费</a></li>
-                                <li><a href="#">网购</a></li>                                
-                                <li><a href="#">教育</a></li>
-                                <li><a href="#">菜米油盐</a></li>
+                                <li><a href="html/weight.html" target="index-right">水费</a></li>
+                                <li><a href="html/weight.html" target="index-right">电费</a></li>
+                                <li><a href="html/weight.html" target="index-right">网费</a></li>
+                                <li><a href="html/weight.html" target="index-right">话费</a></li>
+                                <li><a href="html/weight.html" target="index-right">油费</a></li>
+                                <li><a href="html/weight.html" target="index-right">网购</a></li>                                
+                                <li><a href="html/weight.html" target="index-right">教育</a></li>
+                                <li><a href="html/weight.html" target="index-right">菜米油盐</a></li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-search fa-fw"></i> 数据记录<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li><a href="html/search.html" target="index-right">数据</a></li>
+                                <li><a href="html/report.html" target="index-right">报表</a></li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-sitemap fa-fw"></i> 辅助功能<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li><a href="html/image.html" target="index-right">图片</a></li>
+                                <li><a href="html/weather.html" target="index-right">天气</a></li>
+                                <li><a href="html/article.html" target="index-right">文章</a></li>
+                                <li><a href="html/memorandum.html" target="index-right">备忘录</a></li>
+                                <li><a href="html/alert.html" target="index-right">提醒</a></li>
+                                <li><a href="html/link.html" target="index-right">链接</a></li>
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
@@ -144,7 +180,7 @@
 
         <!-- 内嵌响应网页 -->
         <div id="page-wrapper">
-            <iframe id="index-right" src="dashboard.html" width="100%" height="100%" frameborder="0" onload="changeFrameHeight()" scrolling="auto"></iframe>
+            <iframe id="index-right" name="index-right" src="dashboard.html" width="100%" height="100%" frameborder="0" onload="changeFrameHeight()" scrolling="auto"></iframe>
         </div>
 
     </div>
@@ -362,7 +398,7 @@
 
 
 
-    <script src="plugins/jquery/jquery-3.2.0.min.js"></script>
+    
     <script src="plugins/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
     <script src="js/sb-bootstrap.js"></script>
     <script src="js/metisMenu.min.js"></script>
@@ -370,15 +406,7 @@
     <script src="plugins/datetimepicker/bootstrap-datetimepicker.zh-CN.js"></script>
 
     <script type="text/javascript">
-        function changeFrameHeight() {
-            var ifm = document.getElementById("index-right");
-            ifm.height = document.documentElement.clientHeight;
-        }
-        window.onresize = function () {
-            changeFrameHeight();
-        }
-
-
+      
         var dtOptions = {
             format: 'yyyy-mm-dd',
             autoclose: true,

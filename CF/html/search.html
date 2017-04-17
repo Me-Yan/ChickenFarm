@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>查询数据</title>
+    
+    <script src="../plugins/jquery/jquery-3.2.0.min.js"></script>
+
+    <link href="../plugins/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="../css/search.css">
+  </head>
+  <body>
+    <div class="container-fluid">
+      <!-- 标题 -->
+      <div class="row">
+        <div class="col-lg-12">
+          <h1 class="page-header">查询</h1>
+        </div>
+      </div>
+
+      <!-- 搜索 -->
+      <div class="row form-padding">
+        <form action="" class="form-inline text-center">
+          <input type="hidden" name="category" value="" />
+          <div class="form-group">
+            <label for="classify">大类：</label>
+            <select name="classify" id="classify" class="form-control">
+              <option value="">鸡蛋</option>
+              <option value="">鸡房</option>
+              <option value="">日常</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="category">小类：</label>
+            <select name="category" id="category" class="form-control">
+              <option value="">重量</option>
+              <option value="">单价</option>
+              <option value="">收入</option>
+              <option value="">死亡</option>
+              <option value="">欠款</option>
+              <option value="">还款</option>
+              <option value="">饲料</option>
+              <option value="">疫苗</option>
+              <option value="">房租</option>
+              <option value="">鸡屎</option>
+              <option value="">药物</option>
+              <option value="">设备维护</option>
+              <option value="">水费</option>
+              <option value="">电费</option>
+              <option value="">网费</option>
+              <option value="">话费</option>
+              <option value="">油费</option>
+              <option value="">网购</option>
+              <option value="">教育</option>
+              <option value="">菜米油盐</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="startDate">开始时间：</label>
+            <input type="text" name="startDate" id="startDate" class="form-control" placeholder="选择开始时间" readonly />
+          </div>
+          <div class="form-group">
+            <label for="endDate">结束时间：</label>
+            <input type="text" name="endDate" id="endDate" class='form-control' placeholder="选择结束时间" readonly />
+          </div>
+          <button type="button" class="btn btn-primary btn-duty">查询</button>
+        </form>
+      </div>
+
+      <!-- chart详情 -->
+      <div class="row">
+        <div class="col-lg-12 table-padding">
+          <div class="text-left btn-download">
+            <button type="button" class="btn btn-primary"><i class="fa fa-download"></i>&nbsp;&nbsp;<span>生成Excel文档</span></button>
+          </div>
+          <table class="table table-condensed table-hover table-striped">
+            <thead>
+              <tr>
+                <td>&nbsp;</td>
+                <td>类型</td>
+                <td>数据</td>
+                <td>日期</td>
+                <td>操作</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>收入</td>
+                <td>666666.00</td>
+                <td>2011-09-05</td>
+                <td>
+                  <button type="button" class="btn btn-danger"><i class="fa fa-remove"></i></button>
+                  <button type="button" class="btn btn-primary"><i class="fa fa-edit"></i></button>
+                </td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>收入</td>
+                <td>666666.00</td>
+                <td>2011-09-05</td>
+                <td>
+                  <button type="button" class="btn btn-danger"><i class="fa fa-remove"></i></button>
+                  <button type="button" class="btn btn-primary"><i class="fa fa-edit"></i></button>
+                </td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>收入</td>
+                <td>666666.00</td>
+                <td>2011-09-05</td>
+                <td>
+                  <button type="button" class="btn btn-danger"><i class="fa fa-remove"></i></button>
+                  <button type="button" class="btn btn-primary"><i class="fa fa-edit"></i></button>
+                </td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td>收入</td>
+                <td>666666.00</td>
+                <td>2011-09-05</td>
+                <td>
+                  <button type="button" class="btn btn-danger"><i class="fa fa-remove"></i></button>
+                  <button type="button" class="btn btn-primary"><i class="fa fa-edit"></i></button>
+                </td>
+              </tr>
+              <tr>
+                <td>5</td>
+                <td>收入</td>
+                <td>666666.00</td>
+                <td>2011-09-05</td>
+                <td>
+                  <button type="button" class="btn btn-danger"><i class="fa fa-remove"></i></button>
+                  <button type="button" class="btn btn-primary"><i class="fa fa-edit"></i></button>
+                </td>
+              </tr>
+              <tr>
+                <td>6</td>
+                <td>收入</td>
+                <td>666666.00</td>
+                <td>2011-09-05</td>
+                <td>
+                  <button type="button" class="btn btn-danger"><i class="fa fa-remove"></i></button>
+                  <button type="button" class="btn btn-primary"><i class="fa fa-edit"></i></button>
+                </td>
+              </tr>
+              <tr>
+                <td>7</td>
+                <td>收入</td>
+                <td>666666.00</td>
+                <td>2011-09-05</td>
+                <td>
+                  <button type="button" class="btn btn-danger"><i class="fa fa-remove"></i></button>
+                  <button type="button" class="btn btn-primary"><i class="fa fa-edit"></i></button>
+                </td>
+              </tr>
+              <tr>
+                <td>8</td>
+                <td>收入</td>
+                <td>666666.00</td>
+                <td>2011-09-05</td>
+                <td>
+                  <button type="button" class="btn btn-danger"><i class="fa fa-remove"></i></button>
+                  <button type="button" class="btn btn-primary"><i class="fa fa-edit"></i></button>
+                </td>
+              </tr>
+              <tr>
+                <td>9</td>
+                <td>收入</td>
+                <td>666666.00</td>
+                <td>2011-09-05</td>
+                <td>
+                  <button type="button" class="btn btn-danger"><i class="fa fa-remove"></i></button>
+                  <button type="button" class="btn btn-primary"><i class="fa fa-edit"></i></button>
+                </td>
+              </tr>
+              <tr>
+                <td>10</td>
+                <td>收入</td>
+                <td>666666.00</td>
+                <td>2011-09-05</td>
+                <td>
+                  <button type="button" class="btn btn-danger"><i class="fa fa-remove"></i></button>
+                  <button type="button" class="btn btn-primary"><i class="fa fa-edit"></i></button>
+                </td>
+              </tr>
+              <tr>
+                <td>11</td>
+                <td>收入</td>
+                <td>666666.00</td>
+                <td>2011-09-05</td>
+                <td>
+                  <button type="button" class="btn btn-danger"><i class="fa fa-remove"></i></button>
+                  <button type="button" class="btn btn-primary"><i class="fa fa-edit"></i></button>
+                </td>
+              </tr>
+              <tr>
+                <td>12</td>
+                <td>收入</td>
+                <td>666666.00</td>
+                <td>2011-09-05</td>
+                <td>
+                  <button type="button" class="btn btn-danger"><i class="fa fa-remove"></i></button>
+                  <button type="button" class="btn btn-primary"><i class="fa fa-edit"></i></button>
+                </td>
+              </tr>
+              <tr>
+                <td>13</td>
+                <td>收入</td>
+                <td>666666.00</td>
+                <td>2011-09-05</td>
+                <td>
+                  <button type="button" class="btn btn-danger"><i class="fa fa-remove"></i></button>
+                  <button type="button" class="btn btn-primary"><i class="fa fa-edit"></i></button>
+                </td>
+              </tr>
+              <tr>
+                <td>14</td>
+                <td>收入</td>
+                <td>666666.00</td>
+                <td>2011-09-05</td>
+                <td>
+                  <button type="button" class="btn btn-danger"><i class="fa fa-remove"></i></button>
+                  <button type="button" class="btn btn-primary"><i class="fa fa-edit"></i></button>
+                </td>
+              </tr>
+              <tr>
+                <td>15</td>
+                <td>收入</td>
+                <td>666666.00</td>
+                <td>2011-09-05</td>
+                <td>
+                  <button type="button" class="btn btn-danger"><i class="fa fa-remove"></i></button>
+                  <button type="button" class="btn btn-primary"><i class="fa fa-edit"></i></button>
+                </td>
+              </tr>
+              <tr>
+                <td>16</td>
+                <td>收入</td>
+                <td>666666.00</td>
+                <td>2011-09-05</td>
+                <td>
+                  <button type="button" class="btn btn-danger"><i class="fa fa-remove"></i></button>
+                  <button type="button" class="btn btn-primary"><i class="fa fa-edit"></i></button>
+                </td>
+              </tr>
+              <tr>
+                <td>17</td>
+                <td>收入</td>
+                <td>666666.00</td>
+                <td>2011-09-05</td>
+                <td>
+                  <button type="button" class="btn btn-danger"><i class="fa fa-remove"></i></button>
+                  <button type="button" class="btn btn-primary"><i class="fa fa-edit"></i></button>
+                </td>
+              </tr>
+              <tr>
+                <td>18</td>
+                <td>收入</td>
+                <td>666666.00</td>
+                <td>2011-09-05</td>
+                <td>
+                  <button type="button" class="btn btn-danger"><i class="fa fa-remove"></i></button>
+                  <button type="button" class="btn btn-primary"><i class="fa fa-edit"></i></button>
+                </td>
+              </tr>
+              <tr>
+                <td>19</td>
+                <td>收入</td>
+                <td>666666.00</td>
+                <td>2011-09-05</td>
+                <td>
+                  <button type="button" class="btn btn-danger"><i class="fa fa-remove"></i></button>
+                  <button type="button" class="btn btn-primary"><i class="fa fa-edit"></i></button>
+                </td>
+              </tr>
+              <tr>
+                <td>20</td>
+                <td>收入</td>
+                <td>666666.00</td>
+                <td>2011-09-05</td>
+                <td>
+                  <button type="button" class="btn btn-danger"><i class="fa fa-remove"></i></button>
+                  <button type="button" class="btn btn-primary"><i class="fa fa-edit"></i></button>
+                </td>
+              </tr>
+              <tr>
+                <td>21</td>
+                <td>收入</td>
+                <td>666666.00</td>
+                <td>2011-09-05</td>
+                <td>
+                  <button type="button" class="btn btn-danger"><i class="fa fa-remove"></i></button>
+                  <button type="button" class="btn btn-primary"><i class="fa fa-edit"></i></button>
+                </td>
+              </tr>
+              <tr>
+                <td>22</td>
+                <td>收入</td>
+                <td>666666.00</td>
+                <td>2011-09-05</td>
+                <td>
+                  <button type="button" class="btn btn-danger"><i class="fa fa-remove"></i></button>
+                  <button type="button" class="btn btn-primary"><i class="fa fa-edit"></i></button>
+                </td>
+              </tr>
+              <tr>
+                <td>23</td>
+                <td>收入</td>
+                <td>666666.00</td>
+                <td>2011-09-05</td>
+                <td>
+                  <button type="button" class="btn btn-danger"><i class="fa fa-remove"></i></button>
+                  <button type="button" class="btn btn-primary"><i class="fa fa-edit"></i></button>
+                </td>
+              </tr>
+              <tr>
+                <td>24</td>
+                <td>收入</td>
+                <td>666666.00</td>
+                <td>2011-09-05</td>
+                <td>
+                  <button type="button" class="btn btn-danger"><i class="fa fa-remove"></i></button>
+                  <button type="button" class="btn btn-primary"><i class="fa fa-edit"></i></button>
+                </td>
+              </tr>
+              <tr>
+                <td>25</td>
+                <td>收入</td>
+                <td>666666.00</td>
+                <td>2011-09-05</td>
+                <td>
+                  <button type="button" class="btn btn-danger"><i class="fa fa-remove"></i></button>
+                  <button type="button" class="btn btn-primary"><i class="fa fa-edit"></i></button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-12">
+          <nav aria-label="Page navigation">
+            <ul class="pagination pull-right">
+              <li>
+                <a href="#">首页</a>
+              </li>
+              <li>
+                <a href="#" aria-label="Previous">
+                  <span aria-hidden="true">&laquo;</span>
+                </a>
+              </li>
+              <li><a href="#">1</a></li>
+              <li><a href="#">2</a></li>
+              <li><a href="#">3</a></li>
+              <li><a href="#">4</a></li>
+              <li><a href="#">5</a></li>
+              <li>
+                <a href="#" aria-label="Next">
+                  <span aria-hidden="true">&raquo;</span>
+                </a>
+              </li>
+              <li>
+                <a href="#">尾页</a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+    
+
+
+
+    <script src="../plugins/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <script src="../plugins/datetimepicker/bootstrap-datetimepicker.min.js"></script>
+    <script src="../plugins/datetimepicker/bootstrap-datetimepicker.zh-CN.js"></script>
+    <script type="text/javascript">
+      var options = {
+          format: 'yyyy-mm-dd',
+          autoclose: true,
+          minView: 2,
+          endDate: new Date(new Date().getTime()-24*60*60*1000),
+          language: "zh-CN"
+      };
+      $("#startDate").datetimepicker(options);
+      $("#endDate").datetimepicker(options);
+    </script>
+  </body>
+</html>

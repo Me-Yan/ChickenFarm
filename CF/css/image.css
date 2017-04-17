@@ -1,0 +1,11 @@
+body {
+	padding-right: 20px;
+	padding-top: 20px;
+	padding-bottom: 150px;
+}
+.page-header {
+	font-weight: normal;
+    padding-bottom: 9px;
+    margin: 40px 0 20px;
+    border-bottom: 1px solid #eee;
+}

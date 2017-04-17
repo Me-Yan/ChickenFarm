@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>重量</title>
+
+    <script src="../plugins/jquery/jquery-3.2.0.min.js"></script>
+
+    <link href="../plugins/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="../css/weight.css">
+  </head>
+  <body>
+    <div class="container-fluid">
+      <!-- 标题 -->
+      <div class="row">
+        <div class="col-lg-12">
+          <h1 class="page-header">重量</h1>
+        </div>
+      </div>
+
+      <!-- 搜索 -->
+      <div class="row">
+        <form action="" class="form-inline text-center">
+          <input type="hidden" name="category" value="" />
+          <div class="form-group">
+            <label for="startDate">开始时间：</label>
+            <input type="text" name="startDate" id="startDate" class="form-control" placeholder="选择开始时间" readonly />
+          </div>
+          <div class="form-group">
+            <label for="endDate">结束时间：</label>
+            <input type="text" name="endDate" id="endDate" class='form-control' placeholder="选择结束时间" readonly />
+          </div>
+          <button type="button" class="btn btn-primary">确认</button>
+        </form>
+      </div>
+
+      <!-- chart详情 -->
+      <div class="row">
+        <div class="col-lg-12">
+          <div id="chart-weight" class="chart-weight" style="height:500px;"></div>
+        </div>
+      </div>
+    </div>
+
+
+
+    
+
+    <script src="../plugins/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <script src="../plugins/datetimepicker/bootstrap-datetimepicker.min.js"></script>
+    <script src="../plugins/datetimepicker/bootstrap-datetimepicker.zh-CN.js"></script>
+    <script src="../plugins/echart/echarts.js"></script>
+    <script type="text/javascript">
+      // 日期
+      var options = {
+          format: 'yyyy-mm-dd',
+          autoclose: true,
+          minView: 2,
+          endDate: new Date(new Date().getTime()-24*60*60*1000),
+          language: "zh-CN"
+      };
+      $("#startDate").datetimepicker(options);
+      $("#endDate").datetimepicker(options);
+
+      // chart
+      var chartWeight = echarts.init(document.getElementById('chart-weight'));
+        var weightOptions = {
+            title: {
+                text: '折线图堆叠'
+            },
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                data:['邮件营销','联盟广告','视频广告','直接访问','搜索引擎']
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            toolbox: {
+                feature: {
+                    saveAsImage: {}
+                }
+            },
+            xAxis: {
+                type: 'category',
+                boundaryGap: false,
+                data: ['周一','周二','周三','周四','周五','周六','周日']
+            },
+            yAxis: {
+                type: 'value'
+            },
+            series: [
+                {
+                    name:'邮件营销',
+                    type:'line',
+                    stack: '总量',
+                    data:[120, 132, 101, 134, 90, 230, 210]
+                },
+                {
+                    name:'联盟广告',
+                    type:'line',
+                    stack: '总量',
+                    data:[220, 182, 191, 234, 290, 330, 310]
+                },
+                {
+                    name:'视频广告',
+                    type:'line',
+                    stack: '总量',
+                    data:[150, 232, 201, 154, 190, 330, 410]
+                },
+                {
+                    name:'直接访问',
+                    type:'line',
+                    stack: '总量',
+                    data:[320, 332, 301, 334, 390, 330, 320]
+                },
+                {
+                    name:'搜索引擎',
+                    type:'line',
+                    stack: '总量',
+                    data:[820, 932, 901, 934, 1290, 1330, 1320]
+                }
+            ]
+        };
+        chartWeight.setOption(weightOptions);
+    </script>
+  </body>
+</html>

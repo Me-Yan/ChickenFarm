@@ -1,0 +1,20 @@
+body {
+	padding-right: 30px;
+	padding-bottom: 50px;
+}
+.page-header {
+	font-weight: normal;
+    padding-bottom: 9px;
+    margin: 40px 0 20px;
+    border-bottom: 1px solid #eee;
+}
+.datetimepicker {
+	cursor: pointer;
+}
+.chart-weight {
+	padding-top: 50px;
+	padding-bottom: 50px;
+}
+.form-inline .form-group {
+	padding-left: 20px;
+}
