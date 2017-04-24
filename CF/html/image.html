@@ -11,14 +11,15 @@
 
     <link href="../plugins/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="../plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="../plugins/fileinput/fileinput.min.css">
     <link rel="stylesheet" href="../css/image.css">
+    <link rel="stylesheet" href="../plugins/fileinput/theme.css">
   </head>
   <body>
     <div class="container-fluid">
-      <!-- 标题 -->
       <div class="row">
         <div class="col-lg-12">
-          <h1 class="page-header">图片</h1>
+          <h1 class="page-header">图片<button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#upload-image">上传图片</button></h1>          
         </div>
       </div>
       <div class="row">
@@ -104,10 +105,47 @@
         </div>
       </div>
     </div>
-
-
-
-
+  
+    <!-- 图片上传 -->
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" id="upload-image">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">上传图片</h4>
+          </div>
+          <div class="modal-body">
+            <form enctype="multipart/form-data">
+              <input id="kv-explorer" type="file" multiple>
+              <br>
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  
+  
+  
     <script src="../plugins/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <script src="../plugins/zooming/zooming.min.js"></script>
+    <script src="../plugins/fileinput/sortable.min.js"></script>
+    <script src="../plugins/fileinput/fileinput.min.js"></script>
+    <script src="../plugins/fileinput/theme.js"></script>
+
+    <script>
+      // 图片放大
+      var zooming = new Zooming();
+      zooming.listen('.thumbnail');
+
+      // 图片上传
+      $("#kv-explorer").fileinput({
+            'theme': 'explorer',
+            'uploadUrl': '#',
+            overwriteInitial: false,
+            initialPreviewAsData: true
+        });
+    </script>
   </body>
 </html>
