@@ -14,95 +14,160 @@
     <link rel="stylesheet" href="../plugins/fileinput/fileinput.min.css">
     <link rel="stylesheet" href="../css/image.css">
     <link rel="stylesheet" href="../plugins/fileinput/theme.css">
+    <link rel="stylesheet" href="../plugins/icheck/skins/square/red.css">
   </head>
   <body>
     <div class="container-fluid">
       <div class="row">
         <div class="col-lg-12">
-          <h1 class="page-header">图片<button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#upload-image">上传图片</button></h1>   
+          <h1 class="page-header">图片
+            <button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#upload-image">上传图片</button>
+            <button type="button" class="btn btn-primary pull-right" id="delete-select" style="margin-right:10px;">删除图片</button>
+          </h1>   
         </div>
       </div>
       <div class="row">
-        <div class="col-xs-6 col-md-3">
-          <a href="#" class="thumbnail">
-            <img src="../images/1.jpg" alt="...">
-          </a>
+        <div class="col-lg-12 switch-display" id="select-operation">
+          <button type="button" class="btn btn-primary" id="confirm-select">确认</button>
+          &nbsp;&nbsp;
+          <button type="button" class="btn btn-primary" id="cancel-select">取消</button>
+          &nbsp;&nbsp;
+          <button type="button" class="btn btn-primary" id="all-select" data-select="true">全选</button>
+          <br>
+          <br>
         </div>
-        <div class="col-xs-6 col-md-3">
-          <a href="#" class="thumbnail">
-            <img src="../images/2.jpg" alt="...">
-          </a>
-        </div>
-        <div class="col-xs-6 col-md-3">
-          <a href="#" class="thumbnail">
-            <img src="../images/3.jpg" alt="...">
-          </a>
-        </div>
-        <div class="col-xs-6 col-md-3">
-          <a href="#" class="thumbnail">
-            <img src="../images/4.jpg" alt="...">
-          </a>
-        </div>
-        <div class="col-xs-6 col-md-3">
-          <a href="#" class="thumbnail">
-            <img src="../images/5.jpg" alt="...">
-          </a>
-        </div>
-        <div class="col-xs-6 col-md-3">
-          <a href="#" class="thumbnail">
-            <img src="../images/6.jpg" alt="...">
-          </a>
-        </div>
-        <div class="col-xs-6 col-md-3">
-          <a href="#" class="thumbnail">
-            <img src="../images/7.jpg" alt="...">
-          </a>
-        </div>
-        <div class="col-xs-6 col-md-3">
-          <a href="#" class="thumbnail">
-            <img src="../images/8.jpg" alt="...">
-          </a>
-        </div>
-        <div class="col-xs-6 col-md-3">
-          <a href="#" class="thumbnail">
-            <img src="../images/1.jpg" alt="...">
-          </a>
-        </div>
-        <div class="col-xs-6 col-md-3">
-          <a href="#" class="thumbnail">
-            <img src="../images/2.jpg" alt="...">
-          </a>
-        </div>
-        <div class="col-xs-6 col-md-3">
-          <a href="#" class="thumbnail">
-            <img src="../images/3.jpg" alt="...">
-          </a>
-        </div>
-        <div class="col-xs-6 col-md-3">
-          <a href="#" class="thumbnail">
-            <img src="../images/4.jpg" alt="...">
-          </a>
-        </div>
-        <div class="col-xs-6 col-md-3">
-          <a href="#" class="thumbnail">
-            <img src="../images/5.jpg" alt="...">
-          </a>
-        </div>
-        <div class="col-xs-6 col-md-3">
-          <a href="#" class="thumbnail">
-            <img src="../images/6.jpg" alt="...">
-          </a>
-        </div>
-        <div class="col-xs-6 col-md-3">
-          <a href="#" class="thumbnail">
-            <img src="../images/7.jpg" alt="...">
-          </a>
-        </div>
-        <div class="col-xs-6 col-md-3">
-          <a href="#" class="thumbnail">
-            <img src="../images/8.jpg" alt="...">
-          </a>
-        </div>
+      </div>
+      <div class="row">
+        <form action="" id="image-delete">
+          <div class="col-xs-6 col-md-3">
+            <a href="#" class="thumbnail">
+              <img src="../images/1.jpg" alt="...">            
+            </a>
+            <div class="caption switch-display">
+                <input type="checkbox" />
+            </div>
+          </div>
+          <div class="col-xs-6 col-md-3">
+            <a href="#" class="thumbnail">
+              <img src="../images/2.jpg" alt="...">
+            </a>
+            <div class="caption switch-display">
+                <input type="checkbox" />
+            </div>
+          </div>
+          <div class="col-xs-6 col-md-3">
+            <a href="#" class="thumbnail">
+              <img src="../images/3.jpg" alt="...">
+            </a>
+            <div class="caption switch-display">
+                <input type="checkbox" />
+            </div>
+          </div>
+          <div class="col-xs-6 col-md-3">
+            <a href="#" class="thumbnail">
+              <img src="../images/4.jpg" alt="...">
+            </a>
+            <div class="caption switch-display">
+                <input type="checkbox" />
+            </div>
+          </div>
+          <div class="col-xs-6 col-md-3">
+            <a href="#" class="thumbnail">
+              <img src="../images/5.jpg" alt="...">
+            </a>
+            <div class="caption switch-display">
+                <input type="checkbox" />
+            </div>
+          </div>
+          <div class="col-xs-6 col-md-3">
+            <a href="#" class="thumbnail">
+              <img src="../images/6.jpg" alt="...">
+            </a>
+            <div class="caption switch-display">
+                <input type="checkbox" />
+            </div>
+          </div>
+          <div class="col-xs-6 col-md-3">
+            <a href="#" class="thumbnail">
+              <img src="../images/7.jpg" alt="...">
+            </a>
+            <div class="caption switch-display">
+                <input type="checkbox" />
+            </div>
+          </div>
+          <div class="col-xs-6 col-md-3">
+            <a href="#" class="thumbnail">
+              <img src="../images/8.jpg" alt="...">
+            </a>
+            <div class="caption switch-display">
+                <input type="checkbox" />
+            </div>
+          </div>
+          <div class="col-xs-6 col-md-3">
+            <a href="#" class="thumbnail">
+              <img src="../images/1.jpg" alt="...">
+            </a>
+            <div class="caption switch-display">
+                <input type="checkbox" />
+            </div>
+          </div>
+          <div class="col-xs-6 col-md-3">
+            <a href="#" class="thumbnail">
+              <img src="../images/2.jpg" alt="...">
+            </a>
+            <div class="caption switch-display">
+                <input type="checkbox" />
+            </div>
+          </div>
+          <div class="col-xs-6 col-md-3">
+            <a href="#" class="thumbnail">
+              <img src="../images/3.jpg" alt="...">
+            </a>
+            <div class="caption switch-display">
+                <input type="checkbox" />
+            </div>
+          </div>
+          <div class="col-xs-6 col-md-3">
+            <a href="#" class="thumbnail">
+              <img src="../images/4.jpg" alt="...">
+            </a>
+            <div class="caption switch-display">
+                <input type="checkbox" />
+            </div>
+          </div>
+          <div class="col-xs-6 col-md-3">
+            <a href="#" class="thumbnail">
+              <img src="../images/5.jpg" alt="...">
+            </a>
+            <div class="caption switch-display">
+                <input type="checkbox" />
+            </div>
+          </div>
+          <div class="col-xs-6 col-md-3">
+            <a href="#" class="thumbnail">
+              <img src="../images/6.jpg" alt="...">
+            </a>
+            <div class="caption switch-display">
+                <input type="checkbox" />
+            </div>
+          </div>
+          <div class="col-xs-6 col-md-3">
+            <a href="#" class="thumbnail">
+              <img src="../images/7.jpg" alt="...">
+            </a>
+            <div class="caption switch-display">
+                <input type="checkbox" />
+            </div>
+          </div>
+          <div class="col-xs-6 col-md-3">
+            <a href="#" class="thumbnail">
+              <img src="../images/8.jpg" alt="...">
+            </a>
+            <div class="caption switch-display">
+                <input type="checkbox" />
+            </div>
+          </div>
+        </form>
       </div>
     </div>
   
@@ -133,6 +198,8 @@
     <script src="../plugins/fileinput/sortable.min.js"></script>
     <script src="../plugins/fileinput/fileinput.min.js"></script>
     <script src="../plugins/fileinput/theme.js"></script>
+    <script src="../plugins/icheck/icheck.min.js"></script>
+    <script src="../js/image.js"></script>
 
     <script>
       // 图片放大
@@ -146,6 +213,15 @@
             overwriteInitial: false,
             initialPreviewAsData: true
         });
+
+      // 多选按钮
+      $(document).ready(function(){
+        $('input').iCheck({
+          checkboxClass: 'icheckbox_square-red',
+          radioClass: 'icheckbox_square-red',
+          increaseArea: '20%'
+        });        
+      });
     </script>
   </body>
 </html>
