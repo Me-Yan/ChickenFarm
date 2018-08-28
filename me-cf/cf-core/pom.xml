@@ -30,7 +30,7 @@
         </dependency>
         <dependency>
             <groupId>com.me.inner</groupId>
-            <artifactId>me-common</artifactId>
+            <artifactId>me-security</artifactId>
             <version>1.0-SNAPSHOT</version>
             <classifier>api</classifier>
             <type>jar</type>

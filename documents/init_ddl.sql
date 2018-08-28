@@ -1,0 +1,40 @@
+DROP TABLE IF EXISTS CF_classify;
+CREATE TABLE CF_classify (
+	classifyId_n INT UNSIGNED AUTO_INCREMENT NOT NULL,
+	classifyName_m VARCHAR(20) NOT NULL,
+	crtOn_dt DATETIME NOT NULL,
+	crtBy_m VARCHAR(20) NOT NULL,
+	updOn_dt DATETIME NULL,
+	updBy_m VARCHAR(20) NULL,
+	PRIMARY KEY (classifyId_n)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS CF_category;
+CREATE TABLE CF_category (
+		categoryId_n INT UNSIGNED AUTO_INCREMENT NOT NULL,
+		categoryName_m VARCHAR(20) NOT NULL,
+		classifyId_n INT UNSIGNED NOT NULL,
+		active_c CHAR(1) NOT NULL,
+		crtOn_dt DATETIME NOT NULL,
+		crtBy_m VARCHAR(20) NOT NULL,
+		updOn_dt DATETIME NULL,
+		updBy_m VARCHAR(20) NULL,
+		PRIMARY KEY (categoryId_n)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS CF_record;
+CREATE TABLE CF_record (
+		recordId_n INT UNSIGNED AUTO_INCREMENT NOT NULL,
+		categoryId_n INT UNSIGNED NOT NULL,
+		late_c CHAR(1) NOT NULL,
+		count_n INT NULL,
+		weight_n DOUBLE NULL,
+		price_n DOUBLE NULL,
+		amount_n DOUBLE NULL,
+		desc_x VARCHAR(200) NULL,
+		record_dt DATETIME NOT NULL,
+		active_c CHAR(1) NOT NULL,		
+		crtBy_m VARCHAR(20) NOT NULL,
+		crtOn_dt DATETIME NOT NULL,
+		PRIMARY KEY (recordId_n)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
