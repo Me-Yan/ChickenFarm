@@ -16,7 +16,6 @@
     <sec:http use-expressions="true" auto-config="false" entry-point-ref="authenticationEntryPoint">
         <sec:intercept-url pattern="/**" access="isAuthenticated"/>
         <sec:logout delete-cookies="JSESSIONID" invalidate-session="true" logout-success-url="/login" logout-url="/logout"/>
-        <sec:form-login login-processing-url="/checklogin"/>
         <sec:custom-filter ref="loginFilter" position="FORM_LOGIN_FILTER"/>
     </sec:http>
 
@@ -25,7 +24,7 @@
     </sec:authentication-manager>
 
     <bean id="authenticationEntryPoint" class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
-        <constructor-arg name="loginFormUrl" value="/login"/>
+        <constructor-arg name="loginFormUrl" value="/checklogin"/>
     </bean>
 
     <bean id="loginFilter" class="com.me.inner.filter.CustomAuthenticationFilter">

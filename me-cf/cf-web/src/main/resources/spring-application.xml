@@ -6,7 +6,7 @@
 
     <context:component-scan base-package="com.me.inner.controller,com.me.inner.service"/>
 
-    <import resource="classpath*:spring-common.xml"/>
+    <import resource="classpath:spring-mysql.xml"/>
     <import resource="classpath:cf-security.xml"/>
 
 </beans>
