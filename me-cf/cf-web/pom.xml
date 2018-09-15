@@ -26,11 +26,44 @@
             <version>1.0-SNAPSHOT</version>
             <type>jar</type>
         </dependency>
+
+        <dependency>
+            <groupId>com.me.inner</groupId>
+            <artifactId>me-common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <classifier>api</classifier>
+            <type>jar</type>
+            <scope>provided</scope>
+        </dependency>
         <dependency>
             <groupId>com.me.inner</groupId>
             <artifactId>me-common</artifactId>
             <version>1.0-SNAPSHOT</version>
             <type>war</type>
+        </dependency>
+
+        <dependency>
+            <groupId>com.me.inner</groupId>
+            <artifactId>me-security</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <classifier>api</classifier>
+            <type>jar</type>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.me.inner</groupId>
+            <artifactId>me-security</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <type>war</type>
+        </dependency>
+
+        <dependency>
+            <groupId>com.me.inner</groupId>
+            <artifactId>me-user</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <classifier>api</classifier>
+            <type>jar</type>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.me.inner</groupId>
@@ -42,37 +75,31 @@
 
     <build>
         <finalName>cf-web</finalName>
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <artifactId>maven-clean-plugin</artifactId>
-                    <version>3.0.0</version>
-                </plugin>
-                <plugin>
-                    <artifactId>maven-resources-plugin</artifactId>
-                    <version>3.0.2</version>
-                </plugin>
-                <plugin>
-                    <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.7.0</version>
-                </plugin>
-                <plugin>
-                    <artifactId>maven-surefire-plugin</artifactId>
-                    <version>2.20.1</version>
-                </plugin>
-                <plugin>
-                    <artifactId>maven-war-plugin</artifactId>
-                    <version>3.2.0</version>
-                </plugin>
-                <plugin>
-                    <artifactId>maven-install-plugin</artifactId>
-                    <version>2.5.2</version>
-                </plugin>
-                <plugin>
-                    <artifactId>maven-deploy-plugin</artifactId>
-                    <version>2.8.2</version>
-                </plugin>
-            </plugins>
-        </pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+                <version>9.4.6.v20170531</version>
+                <configuration>
+                    <webApp>
+                        <contextPath>/cf</contextPath>
+                    </webApp>
+                    <scanIntervalSeconds>10</scanIntervalSeconds>
+                    <stopPort>8090</stopPort>
+                    <stopKey>foo</stopKey>
+                    <stopWait>10</stopWait>
+                    <systemProperties>
+                        <systemProperty>
+                            <name>tapestry.execution-mode</name>
+                            <value>development</value>
+                        </systemProperty>
+                        <systemProperty>
+                            <name>jetty.port</name>
+                            <value>8080</value>
+                        </systemProperty>
+                    </systemProperties>
+                </configuration>
+            </plugin>
+        </plugins>
     </build>
 </project>

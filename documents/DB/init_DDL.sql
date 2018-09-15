@@ -2,6 +2,7 @@ DROP TABLE IF EXISTS CF_classify;
 CREATE TABLE CF_classify (
 	classifyId_n INT UNSIGNED AUTO_INCREMENT NOT NULL,
 	classifyName_m VARCHAR(20) NOT NULL,
+	classifyClass_x VARCHAR(50) NOT NULL,
 	crtOn_dt DATETIME NOT NULL,
 	crtBy_m VARCHAR(20) NOT NULL,
 	updOn_dt DATETIME NULL,
@@ -13,6 +14,7 @@ DROP TABLE IF EXISTS CF_category;
 CREATE TABLE CF_category (
 		categoryId_n INT UNSIGNED AUTO_INCREMENT NOT NULL,
 		categoryName_m VARCHAR(20) NOT NULL,
+		path_x VARCHAR(50) NOT NULL,
 		classifyId_n INT UNSIGNED NOT NULL,
 		active_c CHAR(1) NOT NULL,
 		crtOn_dt DATETIME NOT NULL,

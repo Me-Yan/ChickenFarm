@@ -14,9 +14,10 @@
     <sec:http pattern="/NS/**" security="none"/>
 
     <sec:http use-expressions="true" auto-config="false" entry-point-ref="authenticationEntryPoint">
-        <sec:intercept-url pattern="/**" access="isAuthenticated"/>
+        <sec:intercept-url pattern="/**" access="authenticated"/>
         <sec:logout delete-cookies="JSESSIONID" invalidate-session="true" logout-success-url="/login" logout-url="/logout"/>
         <sec:custom-filter ref="loginFilter" position="FORM_LOGIN_FILTER"/>
+        <sec:csrf disabled="true" />
     </sec:http>
 
     <sec:authentication-manager alias="authenticationManager">
@@ -24,7 +25,7 @@
     </sec:authentication-manager>
 
     <bean id="authenticationEntryPoint" class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
-        <constructor-arg name="loginFormUrl" value="/checklogin"/>
+        <constructor-arg name="loginFormUrl" value="/login"/>
     </bean>
 
     <bean id="loginFilter" class="com.me.inner.filter.CustomAuthenticationFilter">
@@ -36,7 +37,12 @@
 
     <bean class="org.springframework.security.web.access.ExceptionTranslationFilter">
         <constructor-arg ref="authenticationEntryPoint"/>
-        <property name="accessDeniedHandler" value="accessDeniedHandler"/>
+        <property name="accessDeniedHandler" ref="accessDeniedHandler"/>
+    </bean>
+
+    <bean id="accessDeniedHandler"
+          class="org.springframework.security.web.access.AccessDeniedHandlerImpl">
+        <property name="errorPage" value="/accessDenied" />
     </bean>
 
 </beans>
