@@ -17,6 +17,7 @@
         <sec:intercept-url pattern="/**" access="authenticated"/>
         <sec:logout delete-cookies="JSESSIONID" invalidate-session="true" logout-success-url="/login" logout-url="/logout"/>
         <sec:custom-filter ref="loginFilter" position="FORM_LOGIN_FILTER"/>
+        <sec:custom-filter ref="urlSecurityInterceptor" before="FILTER_SECURITY_INTERCEPTOR"/>
         <sec:csrf disabled="true" />
     </sec:http>
 
@@ -35,14 +36,15 @@
         <property name="authenticationFailureHandler" ref="failHandler"/>
     </bean>
 
+    <bean id="urlSecurityInterceptor" class="com.me.inner.interceptor.UrlSecurityInterceptor">
+        <property name="authenticationManager" ref="authenticationManager"/>
+        <property name="securityMetadataSource" ref="securityMetadataSource"/>
+        <property name="accessDecisionManager" ref="accessSecurityManager"/>
+    </bean>
+
     <bean class="org.springframework.security.web.access.ExceptionTranslationFilter">
         <constructor-arg ref="authenticationEntryPoint"/>
         <property name="accessDeniedHandler" ref="accessDeniedHandler"/>
-    </bean>
-
-    <bean id="accessDeniedHandler"
-          class="org.springframework.security.web.access.AccessDeniedHandlerImpl">
-        <property name="errorPage" value="/accessDenied" />
     </bean>
 
 </beans>
