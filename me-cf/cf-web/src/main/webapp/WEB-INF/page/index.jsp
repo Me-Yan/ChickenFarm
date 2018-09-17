@@ -1,6 +1,7 @@
 <%@ page import="org.springframework.security.core.context.SecurityContextHolder" %>
 <%@ page import="com.me.inner.dto.BaseUserDetails" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -34,7 +35,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="${pageContext.request.contextPath}/index"><%=((BaseUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()%></a>
+            <a class="navbar-brand" href="${pageContext.request.contextPath}/home"><%=((BaseUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()%></a>
         </div>
 
         <ul class="nav navbar-top-links navbar-right">
@@ -214,31 +215,97 @@
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-xs-5 text-right">用户名：</div>
-                        <div class="col-xs-2"></div>
-                        <div class="col-xs-5 text-left">Me</div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-5 text-right">权限：</div>
-                        <div class="col-xs-2"></div>
-                        <div class="col-xs-5 text-left">超级管理员</div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-5 text-right">性别：</div>
-                        <div class="col-xs-2"></div>
-                        <div class="col-xs-5 text-left">男</div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-5 text-right">手机号码：</div>
-                        <div class="col-xs-2"></div>
-                        <div class="col-xs-5 text-left">18380448173</div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-5 text-right">邮箱：</div>
-                        <div class="col-xs-2"></div>
-                        <div class="col-xs-5 text-left">875649210@qq.com</div>
-                    </div>
+                    <c:if test="${not empty user.username}">
+                        <div class="row">
+                            <div class="col-xs-5 text-right">用户名：</div>
+                            <div class="col-xs-2"></div>
+                            <div class="col-xs-5 text-left"><c:out value="${user.username}"/></div>
+                        </div>
+                    </c:if>
+                    <c:if test="${not empty user.userInfo.name}">
+                        <div class="row">
+                            <div class="col-xs-5 text-right">姓名：</div>
+                            <div class="col-xs-2"></div>
+                            <div class="col-xs-5 text-left"><c:out value="${user.userInfo.name}"/></div>
+                        </div>
+                    </c:if>
+                    <c:if test="${not empty user.userInfo.sex}">
+                        <div class="row">
+                            <div class="col-xs-5 text-right">性别：</div>
+                            <div class="col-xs-2"></div>
+                            <div class="col-xs-5 text-left">
+                                <c:choose>
+                                    <c:when test="${'1' eq user.userInfo.sex}">男</c:when>
+                                    <c:otherwise>女</c:otherwise>
+                                </c:choose>
+                            </div>
+                        </div>
+                    </c:if>
+                    <c:if test="${not empty user.userInfo.age}">
+                        <div class="row">
+                            <div class="col-xs-5 text-right">年龄：</div>
+                            <div class="col-xs-2"></div>
+                            <div class="col-xs-5 text-left"><c:out value="${user.userInfo.age}"/></div>
+                        </div>
+                    </c:if>
+                    <c:if test="${not empty user.userInfo.fromPlace}">
+                        <div class="row">
+                            <div class="col-xs-5 text-right">出生地：</div>
+                            <div class="col-xs-2"></div>
+                            <div class="col-xs-5 text-left"><c:out value="${user.userInfo.fromPlace}"/></div>
+                        </div>
+                    </c:if>
+                    <c:if test="${not empty user.userInfo.birthDay}">
+                        <div class="row">
+                            <div class="col-xs-5 text-right">出生日期：</div>
+                            <div class="col-xs-2"></div>
+                            <div class="col-xs-5 text-left">
+                                <fmt:formatDate value="${user.userInfo.birthDay}" pattern="yyyy-MM-dd"/>
+                            </div>
+                        </div>
+                    </c:if>
+                    <c:if test="${not empty user.userInfo.school}">
+                        <div class="row">
+                            <div class="col-xs-5 text-right">学校：</div>
+                            <div class="col-xs-2"></div>
+                            <div class="col-xs-5 text-left"><c:out value="${user.userInfo.school}"/></div>
+                        </div>
+                    </c:if>
+                    <c:if test="${not empty user.userInfo.phone}">
+                        <div class="row">
+                            <div class="col-xs-5 text-right">手机号码：</div>
+                            <div class="col-xs-2"></div>
+                            <div class="col-xs-5 text-left"><c:out value="${user.userInfo.phone}"/></div>
+                        </div>
+                    </c:if>
+                    <c:if test="${not empty user.userInfo.email}">
+                        <div class="row">
+                            <div class="col-xs-5 text-right">邮箱：</div>
+                            <div class="col-xs-2"></div>
+                            <div class="col-xs-5 text-left"><c:out value="${user.userInfo.email}"/></div>
+                        </div>
+                    </c:if>
+                    <c:if test="${not empty user.userInfo.weight}">
+                        <div class="row">
+                            <div class="col-xs-5 text-right">重量：</div>
+                            <div class="col-xs-2"></div>
+                            <div class="col-xs-5 text-left"><c:out value="${user.userInfo.weight}"/> 斤</div>
+                        </div>
+                    </c:if>
+                    <c:if test="${not empty user.userInfo.height}">
+                        <div class="row">
+                            <div class="col-xs-5 text-right">身高：</div>
+                            <div class="col-xs-2"></div>
+                            <div class="col-xs-5 text-left"><c:out value="${user.userInfo.height}"/> CM</div>
+                        </div>
+                    </c:if>
+                    <c:if test="${not empty user.userInfo.introduction}">
+                        <div class="row">
+                            <div class="col-xs-5 text-right">自我介绍：</div>
+                            <div class="col-xs-2"></div>
+                            <div class="col-xs-5 text-left"><c:out value="${user.userInfo.introduction}"/></div>
+                        </div>
+                    </c:if>
                 </div>
             </div>
         </div><!-- /.modal-content -->

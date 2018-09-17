@@ -4,6 +4,7 @@ import com.google.common.collect.Maps;
 import com.me.inner.dto.BaseUserDetails;
 import com.me.inner.dto.ClassifyDTO;
 import com.me.inner.service.ClassifyService;
+import com.me.inner.util.SecurityUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,8 +33,9 @@ public class HomeController extends BaseController {
         Map<String, Object> model = Maps.newHashMap();
 
         List<ClassifyDTO> classifyList = classifyService.listClassify();
-        BaseUserDetails user =
+        BaseUserDetails user = SecurityUtil.getUserInfo();
 
+        model.put("user", user);
         model.put("classifyList", classifyList);
 
         return new ModelAndView("index", model);

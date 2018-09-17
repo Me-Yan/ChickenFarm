@@ -125,7 +125,7 @@ CREATE TABLE CF_userInfo (
 	name_m VARCHAR(20) NULL,
 	sex_c CHAR(1) NOT NULL,
 	age_n INT NULL,
-	from_m VARCHAR(20) NULL,
+	fromPlace_m VARCHAR(20) NULL,
 	birth_d DATETIME NULL,
 	school_m VARCHAR(50) NULL,
 	phone_x VARCHAR(11) NULL,
