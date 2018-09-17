@@ -1,6 +1,7 @@
 package com.me.inner.controller;
 
 import com.google.common.collect.Maps;
+import com.me.inner.dto.BaseUserDetails;
 import com.me.inner.dto.ClassifyDTO;
 import com.me.inner.service.ClassifyService;
 import org.slf4j.Logger;
@@ -31,6 +32,7 @@ public class HomeController extends BaseController {
         Map<String, Object> model = Maps.newHashMap();
 
         List<ClassifyDTO> classifyList = classifyService.listClassify();
+        BaseUserDetails user =
 
         model.put("classifyList", classifyList);
 
