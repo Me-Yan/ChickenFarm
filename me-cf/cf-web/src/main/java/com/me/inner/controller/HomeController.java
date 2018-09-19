@@ -3,12 +3,14 @@ package com.me.inner.controller;
 import com.google.common.collect.Maps;
 import com.me.inner.dto.BaseUserDetails;
 import com.me.inner.dto.ClassifyDTO;
+import com.me.inner.dto.UserDTO;
 import com.me.inner.service.ClassifyService;
 import com.me.inner.util.SecurityUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -36,6 +38,7 @@ public class HomeController extends BaseController {
         BaseUserDetails user = SecurityUtil.getUserInfo();
 
         model.put("user", user);
+        model.put("userForm", user);
         model.put("classifyList", classifyList);
 
         return new ModelAndView("index", model);

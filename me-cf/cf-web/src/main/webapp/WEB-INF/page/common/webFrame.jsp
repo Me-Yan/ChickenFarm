@@ -17,9 +17,7 @@
 </head>
 <body>
 
-    <div class="container-fluid">
-        <sitemesh:write property="body"/>
-    </div>
+    <sitemesh:write property="body"/>
 
 </body>
 </html>

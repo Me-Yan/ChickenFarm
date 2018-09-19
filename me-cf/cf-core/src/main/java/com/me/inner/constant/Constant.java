@@ -9,4 +9,9 @@ public class Constant {
         String ROLE_SUPER = "ROLE_SUP";
         String ROLE_NOR = "ROLE_NOR";
     }
+
+    public interface Sex {
+        String MALE = "1";
+        String FEMALE = "0";
+    }
 }

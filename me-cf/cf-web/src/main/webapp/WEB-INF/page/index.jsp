@@ -1,7 +1,9 @@
 <%@ page import="org.springframework.security.core.context.SecurityContextHolder" %>
 <%@ page import="com.me.inner.dto.BaseUserDetails" %>
+<%@ page import="com.me.inner.constant.Constant" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -122,7 +124,7 @@
                 <form action="#">
                     <div class="form-group">
                         <label for="one-date">日期</label>
-                        <input type="text" name="" class="form-control" id="one-date" data-date-format="yyyy-mm-dd" readonly />
+                        <input type="text" name="" class="form-control flatpickr" data-date-format="Y-m-d" data-enable-time="false" id="one-date" data-date-format="yyyy-mm-dd" readonly />
                     </div>
                     <div class="form-group">
                         <label for="one-classify">一级分类</label>
@@ -173,7 +175,7 @@
                 <form>
                     <div class="form-group">
                         <label for="more-date">日期</label>
-                        <input type="text" name="" class="form-control" id="more-date" data-date-format="yyyy-mm-dd" readonly />
+                        <input type="text" name="" class="form-control flatpickr" data-date-format="Y-m-d" data-enable-time="false" id="more-date" data-date-format="yyyy-mm-dd" readonly />
                     </div>
                     <div class="form-group">
                         <label for="more-weight">重量</label>
@@ -312,6 +314,9 @@
     </div><!-- /.modal-dialog -->
 </div>
 
+<c:set var="male" value="<%=Constant.Sex.MALE%>"/>
+<c:set var="female" value="<%=Constant.Sex.FEMALE%>"/>
+
 <!-- 编辑用户信息 -->
 <div class="modal fade" id="user-edit" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
@@ -321,42 +326,71 @@
                 <h4 class="modal-title">编辑</h4>
             </div>
             <div class="modal-body">
-                <form>
+                <form:form modelAttribute="userForm" class="form-horizontal" id="userForm" method="post">
                     <div class="form-group">
                         <label for="username">用户名</label>
-                        <input type="text" class="form-control" id="username" placeholder="username">
+                        <form:input path="username" type="text" class="form-control" maxlength="20" id="username"/>
                     </div>
                     <div class="form-group">
                         <label for="reset-password">重置密码</label>
-                        <select name="resetI" class="form-control" id="reset-password">
-                            <option value="0">否</option>
-                            <option value="1">是</option>
-                        </select>
+                        <form:select path="resetI" class="form-control" id="reset-password">
+                            <form:option value="0" selected="selected">否</form:option>
+                            <form:option value="1">是</form:option>
+                        </form:select>
                     </div>
                     <div class="form-group">
-                        <label for="username">密码</label>
-                        <input type="password" class="form-control" id="password" placeholder="password">
+                        <label for="password">密码</label>
+                        <form:input path="password" type="password" class="form-control" id="password" maxlength="20" placeholder="若重置密码，请填写新密码"/>
                     </div>
                     <div class="form-group">
                         <label for="confirm-password">确认密码</label>
-                        <input type="password" class="form-control" id="confirm-password">
+                        <form:input path="userInfo.confirmPassword" type="password" class="form-control" maxlength="20" id="confirm-password"/>
                     </div>
                     <div class="form-group">
                         <label for="sex">性别</label>
-                        <select class="form-control" id="sex">
-                            <option value="0">男</option>
-                            <option value="1">女</option>
-                        </select>
+                        <form:select path="userInfo.sex" class="form-control" id="sex">
+                            <form:option value="<%=Constant.Sex.MALE%>">男</form:option>
+                            <form:option value="<%=Constant.Sex.FEMALE%>">女</form:option>
+                        </form:select>
                     </div>
                     <div class="form-group">
-                        <label for="username">手机号码</label>
-                        <input type="phone" class="form-control" id="phone" placeholder="phone">
+                        <label for="age">年龄</label>
+                        <form:input path="userInfo.age" type="text" class="form-control" id="age" />
+                    </div>
+                    <div class="form-group">
+                        <label for="fromPlace">出生地</label>
+                        <form:input path="userInfo.fromPlace" type="text" maxlength="20" class="form-control" id="fromPlace" />
+                    </div>
+                    <fmt:formatDate value="${user.userInfo.birthDay}" pattern="yyyy-MM-dd" var="birthDay"/>
+                    <div class="form-group">
+                        <label for="birthDay">出生日期</label>
+                        <form:input path="userInfo.birthDay" type="text" data-enable-time="false" data-default-value="${birthDay}" class="form-control flatpickr" id="birthDay" />
+                    </div>
+                    <div class="form-group">
+                        <label for="school">学校</label>
+                        <form:input path="userInfo.school" type="text" class="form-control" id="school" maxlength="50"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">手机号码</label>
+                        <form:input path="userInfo.phone" type="text" class="form-control" id="phone" maxlength="11"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="weight">体重</label>
+                        <form:input path="userInfo.weight" type="text" class="form-control" id="weight"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="height">身高</label>
+                        <form:input path="userInfo.height" type="text" class="form-control" id="height"/>
                     </div>
                     <div class="form-group">
                         <label for="email">邮箱</label>
-                        <input type="email" class="form-control" id="email" placeholder="email">
+                        <form:input path="userInfo.email" type="email" class="form-control" id="email"/>
                     </div>
-                </form>
+                    <div class="form-group">
+                        <label for="introduction">简介</label>
+                        <form:textarea path="userInfo.introduction" id="introduction" maxlength="200" class="form-control" style="resize: none;height: 100px;"><c:out value="${user.userInfo.introduction}"/></form:textarea>
+                    </div>
+                </form:form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
@@ -386,6 +420,9 @@
 </div>
 
 <script type="text/javascript">
+
+    $('#one-date, #more-date, #birthDay').flatpickr();
+
     function changeFrameHeight() {
         var ifm = document.getElementById("index-right");
         ifm.height = document.documentElement.clientHeight;
@@ -398,14 +435,6 @@
     $(window).resize(function () {
         $('#index-right').height($(window).height() - $('#index-top').height());
     });
-
-    var dtOptions = {
-        dateFormat: 'Y-m-d'
-    };
-    // 单条记录数据追加-日期
-    $('#one-date').flatpickr(dtOptions);
-    // 销售记录追加-日期
-    $('#more-date').flatpickr(dtOptions);
 </script>
 
 </body>
