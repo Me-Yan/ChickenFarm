@@ -6,6 +6,7 @@ import com.me.inner.dto.ClassifyDTO;
 import com.me.inner.dto.UserDTO;
 import com.me.inner.service.ClassifyService;
 import com.me.inner.util.SecurityUtil;
+import com.me.inner.vo.UserVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +39,7 @@ public class HomeController extends BaseController {
         BaseUserDetails user = SecurityUtil.getUserInfo();
 
         model.put("user", user);
-        model.put("userForm", user);
+        model.put("userForm", new UserVO());
         model.put("classifyList", classifyList);
 
         return new ModelAndView("index", model);
