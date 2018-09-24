@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.me.inner.mapper.UserMapper">
+    
+    <resultMap id="userMap" type="com.me.inner.dto.UserDTO">
+        <id property="userId" column="userId_n" jdbcType="INTEGER"/>
+        <result property="username" column="username_m" jdbcType="VARCHAR"/>
+        <association property="userInfo" javaType="com.me.inner.dto.UserInfoDTO">
+            <id property="infoId" column="infoId_n" jdbcType="INTEGER"/>
+            <result property="userId" column="userId_n" jdbcType="INTEGER"/>
+            <result property="name" column="name_m" jdbcType="VARCHAR"/>
+            <result property="sex" column="sex_c" jdbcType="CHAR"/>
+            <result property="age" column="age_n" jdbcType="INTEGER"/>
+            <result property="fromPlace" column="fromPlace_m" jdbcType="VARCHAR"/>
+            <result property="birthDay" column="birth_d" jdbcType="DATE"/>
+            <result property="school" column="school_m" jdbcType="VARCHAR"/>
+            <result property="phone" column="phone_x" jdbcType="VARCHAR"/>
+            <result property="email" column="email_x" jdbcType="VARCHAR"/>
+            <result property="weight" column="weight_n" jdbcType="DOUBLE"/>
+            <result property="height" column="height_n" jdbcType="DOUBLE"/>
+            <result property="introduction" column="intro_x" jdbcType="VARCHAR"/>
+        </association>
+    </resultMap>
+
+    <select id="getUserByUserId" parameterType="java.lang.Integer" resultMap="userMap">
+        SELECT
+            user.userId_n,
+            user.username_m,
+            info.infoId_n,
+            info.name_m,
+            info.sex_c,
+            info.age_n,
+            info.fromPlace_m,
+            info.birth_d,
+            info.school_m,
+            info.phone_x,
+            info.email_x,
+            info.weight_n,
+            info.height_n,
+            info.intro_x
+        FROM ${tablePrefix}user user
+        LEFT JOIN ${tablePrefix}userinfo info ON user.userId_n = info.userId_n
+        WHERE user.userId_n = #{userId} AND user.enabled_c = 'Y'
+    </select>
+
+    <update id="updatePassword" parameterType="com.me.inner.dto.UserDTO">
+        UPDATE ${tablePrefix}user SET
+            password_x = #{password, jdbcType=VARCHAR},
+            updOn_dt = #{updateDate, jdbcType=TIMESTAMP},
+            updBy_m = #{updateBy, jdbcType=VARCHAR}
+        WHERE userId_n = #{userId, jdbcType=INTEGER}
+    </update>
+
+    <update id="updateUserInfo" parameterType="com.me.inner.dto.UserInfoDTO">
+        UPDATE ${tablePrefix}userinfo SET
+            name_m = #{name, jdbcType=VARCHAR},
+            sex_c = #{sex, jdbcType=CHAR},
+            age_n = #{age, jdbcType=INTEGER},
+            fromPlace_m = #{fromPlace, jdbcType=VARCHAR},
+            birth_d = #{birthDay, jdbcType=TIMESTAMP},
+            school_m = #{school, jdbcType=VARCHAR},
+            phone_x = #{phone, jdbcType=VARCHAR},
+            email_x = #{email, jdbcType=VARCHAR},
+            weight_n = #{weight, jdbcType=DOUBLE},
+            height_n = #{height, jdbcType=DOUBLE},
+            intro_x = #{introduction, jdbcType=VARCHAR},
+            updOn_dt = #{updateDate, jdbcType=TIMESTAMP},
+            updBy_m = #{updateBy, jdbcType=VARCHAR}
+        WHERE userId_n = #{userId, jdbcType=INTEGER}
+    </update>
+
+</mapper>

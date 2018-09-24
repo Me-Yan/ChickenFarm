@@ -11,4 +11,9 @@ public interface ClassifyMapper {
 
     List<ClassifyDTO> listClassify();
 
+    List<ClassifyDTO> listAllClassify();
+
+    void updateClassify(ClassifyDTO classify);
+
+    void saveClassify(ClassifyDTO classify);
 }

@@ -15,11 +15,49 @@ public class CategoryDTO implements Serializable {
     private String categoryName;
     private String path;
     private Integer classifyId;
+    private Integer sequence;
     private String active;
     private Date createDate;
     private String createBy;
     private Date updateDate;
     private String updateBy;
+
+    // view and operation
+    private String createDateStr;
+    private String classifyName;
+    private String status;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getClassifyName() {
+        return classifyName;
+    }
+
+    public void setClassifyName(String classifyName) {
+        this.classifyName = classifyName;
+    }
+
+    public String getCreateDateStr() {
+        return createDateStr;
+    }
+
+    public void setCreateDateStr(String createDateStr) {
+        this.createDateStr = createDateStr;
+    }
+
+    public Integer getSequence() {
+        return sequence;
+    }
+
+    public void setSequence(Integer sequence) {
+        this.sequence = sequence;
+    }
 
     public Integer getCategoryId() {
         return categoryId;

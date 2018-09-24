@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.me.inner.mapper.CategoryMapper">
+
+    <select id="listAllCategoryByClassifyId" parameterType="java.lang.Integer" resultType="com.me.inner.dto.CategoryDTO">
+        SELECT
+            cg.categoryId_n AS categoryId,
+            cg.categoryName_m AS categoryName,
+            cg.path_x AS path,
+            cg.classifyId_n AS classifyId,
+            cg.seq_c AS sequence,
+            cg.active_c AS active,
+            DATE_FORMAT(cg.crtOn_dt, '%Y-%m-%d %H:%i') AS createDateStr,
+            cg.crtBy_m AS createBy,
+            cf.classifyName_m AS classifyName,
+            cf.status_x AS status
+        FROM cf_category cg
+        LEFT JOIN cf_classify cf ON cg.classifyId_n = cf.classifyId_n
+        <if test="classifyId!=null">
+            WHERE cg.classifyId_n = #{classifyId}
+        </if>
+        ORDER BY cf.seq_c ASC, cg.seq_c ASC
+    </select>
+
+    <update id="activeAllCategory" parameterType="java.lang.Integer">
+        UPDATE cf_category SET active_c = 'A' WHERE classifyId_n = #{classifyId, jdbcType=INTEGER} AND active_c = 'I'
+    </update>
+    
+    <update id="closeAllCategory" parameterType="java.lang.Integer">
+        UPDATE cf_category SET active_c = 'I' WHERE classifyId_n = #{classifyId, jdbcType=INTEGER} AND active_c = 'A'
+    </update>
+
+</mapper>

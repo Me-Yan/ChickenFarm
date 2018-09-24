@@ -1,6 +1,7 @@
 package com.me.inner.vo;
 
 import com.me.inner.dto.UserDTO;
+import com.me.inner.dto.UserInfoDTO;
 
 import java.io.Serializable;
 
@@ -11,17 +12,18 @@ public class UserVO implements Serializable {
 
     private static final long serialVersionUID = 2403629587820443316L;
 
-    private UserDTO user;
+    private UserInfoDTO userInfo;
     private String resetI;
+    private String password;
     private String confirmPassword;
     private String birthDayStr;
 
-    public UserDTO getUser() {
-        return user;
+    public UserInfoDTO getUserInfo() {
+        return userInfo;
     }
 
-    public void setUser(UserDTO user) {
-        this.user = user;
+    public void setUserInfo(UserInfoDTO userInfo) {
+        this.userInfo = userInfo;
     }
 
     public String getResetI() {
@@ -30,6 +32,14 @@ public class UserVO implements Serializable {
 
     public void setResetI(String resetI) {
         this.resetI = resetI;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getConfirmPassword() {

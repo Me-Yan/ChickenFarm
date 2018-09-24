@@ -61,23 +61,21 @@
                     <li><a href="#add-one" data-toggle="modal" data-target="#add-one">单条数据</a></li>
                     <li><a href="#add-more" data-toggle="modal" data-target="#add-more">销售数据</a></li>
                 </ul>
-                <!-- /.dropdown-alerts -->
             </li>
-            <!-- /.dropdown -->
             <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                     <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
                 </a>
                 <ul class="dropdown-menu dropdown-user">
                     <li>
-                        <a href="#user-info" data-toggle="modal" data-target="#user-info"><i class="fa fa-user fa-fw"></i> 个人信息</a>
+                        <a href="#userInfo" data-toggle="modal" data-target="#userInfo"><i class="fa fa-user fa-fw"></i> 个人信息</a>
                     </li>
                     <li>
-                        <a href="#user-edit" data-toggle="modal" data-target="#user-edit"><i class="fa fa-edit fa-fw"></i> 修改信息</a>
+                        <a href="#userEdit" data-toggle="modal" data-target="#userEdit"><i class="fa fa-edit fa-fw"></i> 修改信息</a>
                     </li>
                     <li class="divider"></li>
                     <li>
-                        <a href="#user-logout" data-toggle="modal" data-target="#user-logout"><i class="fa fa-sign-out fa-fw"></i> 退出</a>
+                        <a href="#userLogout" data-toggle="modal" data-target="#userLogout"><i class="fa fa-sign-out fa-fw"></i> 退出</a>
                     </li>
                 </ul>
             </li>
@@ -89,15 +87,17 @@
                     <li>
                         <a href="${pageContext.request.contextPath}/dashboard" target="index-right"><i class="fa fa-dashboard fa-fw"></i> 首页</a>
                     </li>
-                    <c:if test="${not empty classifyList and not empty classify.categoryList}">
+                    <c:if test="${not empty classifyList}">
                         <li>
                             <c:forEach items="${classifyList}" var="classify">
                                 <a href="javascript:void(0)"><i class="${classify.classifyClass}"></i> ${classify.classifyName}<span class="fa arrow"></span></a>
-                                <ul class="nav nav-second-level">
-                                    <c:forEach items="${classify.categoryList}" var="category">
-                                        <li><a href="${pageContext.request.contextPath}/${category.path}" target="index-right">${category.categoryName}</a></li>
-                                    </c:forEach>
-                                </ul>
+                                <c:if test="${not empty classify.categoryList}">
+                                    <ul class="nav nav-second-level">
+                                        <c:forEach items="${classify.categoryList}" var="category">
+                                            <li><a href="${pageContext.request.contextPath}/${category.path}" target="index-right">${category.categoryName}</a></li>
+                                        </c:forEach>
+                                    </ul>
+                                </c:if>
                             </c:forEach>
                         </li>
                     </c:if>
@@ -111,6 +111,114 @@
         <iframe id="index-right" name="index-right" src="${pageContext.request.contextPath}/dashboard" width="100%" height="100%" frameborder="0" onload="changeFrameHeight()" scrolling="auto"></iframe>
     </div>
 
+</div>
+
+
+<!-- 用户信息弹窗 -->
+<div class="modal fade" id="userInfo" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">个人信息</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <c:if test="${not empty user.username}">
+                        <div class="row">
+                            <div class="col-xs-5 text-right">用户名：</div>
+                            <div class="col-xs-1"></div>
+                            <div class="col-xs-5 text-left"><c:out value="${user.username}"/></div>
+                        </div>
+                    </c:if>
+                    <c:if test="${not empty user.userInfo.name}">
+                        <div class="row">
+                            <div class="col-xs-5 text-right">姓名：</div>
+                            <div class="col-xs-1"></div>
+                            <div class="col-xs-5 text-left"><c:out value="${user.userInfo.name}"/></div>
+                        </div>
+                    </c:if>
+                    <c:if test="${not empty user.userInfo.sex}">
+                        <div class="row">
+                            <div class="col-xs-5 text-right">性别：</div>
+                            <div class="col-xs-1"></div>
+                            <div class="col-xs-5 text-left">
+                                <c:choose>
+                                    <c:when test="${'1' eq user.userInfo.sex}">男</c:when>
+                                    <c:otherwise>女</c:otherwise>
+                                </c:choose>
+                            </div>
+                        </div>
+                    </c:if>
+                    <c:if test="${not empty user.userInfo.age}">
+                        <div class="row">
+                            <div class="col-xs-5 text-right">年龄：</div>
+                            <div class="col-xs-1"></div>
+                            <div class="col-xs-5 text-left"><c:out value="${user.userInfo.age}"/></div>
+                        </div>
+                    </c:if>
+                    <c:if test="${not empty user.userInfo.fromPlace}">
+                        <div class="row">
+                            <div class="col-xs-5 text-right">出生地：</div>
+                            <div class="col-xs-1"></div>
+                            <div class="col-xs-5 text-left"><c:out value="${user.userInfo.fromPlace}"/></div>
+                        </div>
+                    </c:if>
+                    <c:if test="${not empty user.userInfo.birthDay}">
+                        <div class="row">
+                            <div class="col-xs-5 text-right">出生日期：</div>
+                            <div class="col-xs-1"></div>
+                            <div class="col-xs-5 text-left">
+                                <fmt:formatDate value="${user.userInfo.birthDay}" pattern="yyyy-MM-dd"/>
+                            </div>
+                        </div>
+                    </c:if>
+                    <c:if test="${not empty user.userInfo.school}">
+                        <div class="row">
+                            <div class="col-xs-5 text-right">学校：</div>
+                            <div class="col-xs-1"></div>
+                            <div class="col-xs-5 text-left"><c:out value="${user.userInfo.school}"/></div>
+                        </div>
+                    </c:if>
+                    <c:if test="${not empty user.userInfo.phone}">
+                        <div class="row">
+                            <div class="col-xs-5 text-right">手机号码：</div>
+                            <div class="col-xs-1"></div>
+                            <div class="col-xs-5 text-left"><c:out value="${user.userInfo.phone}"/></div>
+                        </div>
+                    </c:if>
+                    <c:if test="${not empty user.userInfo.email}">
+                        <div class="row">
+                            <div class="col-xs-5 text-right">邮箱：</div>
+                            <div class="col-xs-1"></div>
+                            <div class="col-xs-5 text-left"><c:out value="${user.userInfo.email}"/></div>
+                        </div>
+                    </c:if>
+                    <c:if test="${not empty user.userInfo.weight}">
+                        <div class="row">
+                            <div class="col-xs-5 text-right">重量：</div>
+                            <div class="col-xs-1"></div>
+                            <div class="col-xs-5 text-left"><c:out value="${user.userInfo.weight}"/> 斤</div>
+                        </div>
+                    </c:if>
+                    <c:if test="${not empty user.userInfo.height}">
+                        <div class="row">
+                            <div class="col-xs-5 text-right">身高：</div>
+                            <div class="col-xs-1"></div>
+                            <div class="col-xs-5 text-left"><c:out value="${user.userInfo.height}"/> CM</div>
+                        </div>
+                    </c:if>
+                    <c:if test="${not empty user.userInfo.introduction}">
+                        <div class="row">
+                            <div class="col-xs-5 text-right">自我介绍：</div>
+                            <div class="col-xs-1"></div>
+                            <div class="col-xs-5 text-left"><c:out value="${user.userInfo.introduction}"/></div>
+                        </div>
+                    </c:if>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <!-- 正常添加单条数据弹窗表单 -->
@@ -160,8 +268,8 @@
                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                 <button type="button" class="btn btn-primary">确认</button>
             </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
+        </div>
+    </div>
 </div>
 
 <!-- 添加销售记录弹窗表单 -->
@@ -204,206 +312,127 @@
                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                 <button type="button" class="btn btn-primary">确认</button>
             </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div>
-
-<!-- 用户信息弹窗 -->
-<div class="modal fade" id="user-info" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">个人信息</h4>
-            </div>
-            <div class="modal-body">
-                <div class="container-fluid">
-                    <c:if test="${not empty user.username}">
-                        <div class="row">
-                            <div class="col-xs-5 text-right">用户名：</div>
-                            <div class="col-xs-2"></div>
-                            <div class="col-xs-5 text-left"><c:out value="${user.username}"/></div>
-                        </div>
-                    </c:if>
-                    <c:if test="${not empty user.userInfo.name}">
-                        <div class="row">
-                            <div class="col-xs-5 text-right">姓名：</div>
-                            <div class="col-xs-2"></div>
-                            <div class="col-xs-5 text-left"><c:out value="${user.userInfo.name}"/></div>
-                        </div>
-                    </c:if>
-                    <c:if test="${not empty user.userInfo.sex}">
-                        <div class="row">
-                            <div class="col-xs-5 text-right">性别：</div>
-                            <div class="col-xs-2"></div>
-                            <div class="col-xs-5 text-left">
-                                <c:choose>
-                                    <c:when test="${'1' eq user.userInfo.sex}">男</c:when>
-                                    <c:otherwise>女</c:otherwise>
-                                </c:choose>
-                            </div>
-                        </div>
-                    </c:if>
-                    <c:if test="${not empty user.userInfo.age}">
-                        <div class="row">
-                            <div class="col-xs-5 text-right">年龄：</div>
-                            <div class="col-xs-2"></div>
-                            <div class="col-xs-5 text-left"><c:out value="${user.userInfo.age}"/></div>
-                        </div>
-                    </c:if>
-                    <c:if test="${not empty user.userInfo.fromPlace}">
-                        <div class="row">
-                            <div class="col-xs-5 text-right">出生地：</div>
-                            <div class="col-xs-2"></div>
-                            <div class="col-xs-5 text-left"><c:out value="${user.userInfo.fromPlace}"/></div>
-                        </div>
-                    </c:if>
-                    <c:if test="${not empty user.userInfo.birthDay}">
-                        <div class="row">
-                            <div class="col-xs-5 text-right">出生日期：</div>
-                            <div class="col-xs-2"></div>
-                            <div class="col-xs-5 text-left">
-                                <fmt:formatDate value="${user.userInfo.birthDay}" pattern="yyyy-MM-dd"/>
-                            </div>
-                        </div>
-                    </c:if>
-                    <c:if test="${not empty user.userInfo.school}">
-                        <div class="row">
-                            <div class="col-xs-5 text-right">学校：</div>
-                            <div class="col-xs-2"></div>
-                            <div class="col-xs-5 text-left"><c:out value="${user.userInfo.school}"/></div>
-                        </div>
-                    </c:if>
-                    <c:if test="${not empty user.userInfo.phone}">
-                        <div class="row">
-                            <div class="col-xs-5 text-right">手机号码：</div>
-                            <div class="col-xs-2"></div>
-                            <div class="col-xs-5 text-left"><c:out value="${user.userInfo.phone}"/></div>
-                        </div>
-                    </c:if>
-                    <c:if test="${not empty user.userInfo.email}">
-                        <div class="row">
-                            <div class="col-xs-5 text-right">邮箱：</div>
-                            <div class="col-xs-2"></div>
-                            <div class="col-xs-5 text-left"><c:out value="${user.userInfo.email}"/></div>
-                        </div>
-                    </c:if>
-                    <c:if test="${not empty user.userInfo.weight}">
-                        <div class="row">
-                            <div class="col-xs-5 text-right">重量：</div>
-                            <div class="col-xs-2"></div>
-                            <div class="col-xs-5 text-left"><c:out value="${user.userInfo.weight}"/> 斤</div>
-                        </div>
-                    </c:if>
-                    <c:if test="${not empty user.userInfo.height}">
-                        <div class="row">
-                            <div class="col-xs-5 text-right">身高：</div>
-                            <div class="col-xs-2"></div>
-                            <div class="col-xs-5 text-left"><c:out value="${user.userInfo.height}"/> CM</div>
-                        </div>
-                    </c:if>
-                    <c:if test="${not empty user.userInfo.introduction}">
-                        <div class="row">
-                            <div class="col-xs-5 text-right">自我介绍：</div>
-                            <div class="col-xs-2"></div>
-                            <div class="col-xs-5 text-left"><c:out value="${user.userInfo.introduction}"/></div>
-                        </div>
-                    </c:if>
-                </div>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
+        </div>
+    </div>
 </div>
 
 <c:set var="male" value="<%=Constant.Sex.MALE%>"/>
 <c:set var="female" value="<%=Constant.Sex.FEMALE%>"/>
 
 <!-- 编辑用户信息 -->
-<div class="modal fade" id="user-edit" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
+<div class="modal fade" id="userEdit" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title">编辑</h4>
             </div>
             <div class="modal-body">
-                <form:form modelAttribute="userForm" id="userForm" method="post">
+                <form:form action="${pageContext.request.contextPath}/updateUser" cssClass="form-horizontal" modelAttribute="userForm" id="userForm" method="post">
                     <div class="form-group">
-                        <label for="username">用户名</label>
-                        <form:input path="user.username" value="${user.username}" type="text" class="form-control" maxlength="20" id="username"/>
-                        <span class="text-error hide" name="user.usernameMessage"></span>
+                        <label class="col-xs-4 col-sm-4 col-md-2 control-label" for="name">姓名</label>
+                        <div class="col-xs-8 col-sm-7 col-md-9">
+                            <form:input path="userInfo.name" value="${user.userInfo.name}" type="text" class="form-control" maxlength="20" id="name"/>
+                            <span class="text-error hide" name="userInfo.nameMessage"></span>
+                        </div>
                     </div>
                     <div class="form-group">
-                        <label for="resetPassword">重置密码</label>
-                        <form:select path="resetI" class="form-control" id="resetPassword">
-                            <form:option value="<%=CommonConstant.YES_NO.NO%>" selected="selected">否</form:option>
-                            <form:option value="<%=CommonConstant.YES_NO.YES%>">是</form:option>
-                        </form:select>
+                        <label for="resetPassword" class="col-xs-4 col-sm-4 col-md-2 control-label">重置密码</label>
+                        <div class="col-xs-8 col-sm-7 col-md-9">
+                            <form:select path="resetI" class="form-control" id="resetPassword">
+                                <form:option value="<%=CommonConstant.YES_NO.NO%>" selected="selected">否</form:option>
+                                <form:option value="<%=CommonConstant.YES_NO.YES%>">是</form:option>
+                            </form:select>
+                        </div>
                     </div>
                     <div id="passwordNode" class="hide">
                         <div class="form-group">
-                            <label for="password">密码</label>
-                            <form:input path="user.password" type="password" class="form-control" id="password" maxlength="20" placeholder="若重置密码，请填写新密码"/>
-                            <span class="text-error hide" name="user.passwordMessage"></span>
+                            <label for="password" class="col-xs-4 col-sm-4 col-md-2 control-label">密码</label>
+                            <div class="col-xs-8 col-sm-7 col-md-9">
+                                <form:input path="password" type="password" class="form-control" id="password" maxlength="20" placeholder="若重置密码，请填写新密码"/>
+                                <span class="text-error hide" name="passwordMessage"></span>
+                            </div>
                         </div>
                         <div class="form-group">
-                            <label for="confirmPassword">确认密码</label>
-                            <form:input path="confirmPassword" type="password" class="form-control" maxlength="20" id="confirmPassword"/>
-                            <span class="text-error hide" name="confirmPasswordMessage"></span>
+                            <label for="confirmPassword" class="col-xs-4 col-sm-4 col-md-2 control-label">确认密码</label>
+                            <div class="col-xs-8 col-sm-7 col-md-9">
+                                <form:input path="confirmPassword" type="password" class="form-control" maxlength="20" id="confirmPassword"/>
+                                <span class="text-error hide" name="confirmPasswordMessage"></span>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="sex">性别</label>
-                        <form:select path="user.userInfo.sex" class="form-control" id="sex">
-                            <form:option value="<%=Constant.Sex.MALE%>">男</form:option>
-                            <form:option value="<%=Constant.Sex.FEMALE%>">女</form:option>
-                        </form:select>
+                        <label for="sex" class="col-xs-4 col-sm-4 col-md-2 control-label">性别</label>
+                        <div class="col-xs-8 col-sm-7 col-md-9">
+                            <form:select path="userInfo.sex" class="form-control" id="sex">
+                                <form:option value="<%=Constant.Sex.MALE%>">男</form:option>
+                                <form:option value="<%=Constant.Sex.FEMALE%>">女</form:option>
+                            </form:select>
+                        </div>
                     </div>
                     <div class="form-group">
-                        <label for="age">年龄</label>
-                        <form:input path="user.userInfo.age" value="${user.userInfo.age}" type="text" class="form-control" id="age" />
-                        <span class="text-error hide" name="user.userInfo.ageMessage"></span>
+                        <label for="age" class="col-xs-4 col-sm-4 col-md-2 control-label">年龄</label>
+                        <div class="col-xs-8 col-sm-7 col-md-9">
+                            <form:input path="userInfo.age" value="${user.userInfo.age}" type="text" class="form-control" id="age" />
+                            <span class="text-error hide" name="userInfo.ageMessage"></span>
+                        </div>
                     </div>
                     <div class="form-group">
-                        <label for="fromPlace">出生地</label>
-                        <form:input path="user.userInfo.fromPlace" value="${user.userInfo.fromPlace}" type="text" maxlength="20" class="form-control" id="fromPlace" />
-                        <span class="text-error hide" name="user.userInfo.fromPlaceMessage"></span>
+                        <label for="fromPlace" class="col-xs-4 col-sm-4 col-md-2 control-label">出生地</label>
+                        <div class="col-xs-8 col-sm-7 col-md-9">
+                            <form:input path="userInfo.fromPlace" value="${user.userInfo.fromPlace}" type="text" maxlength="20" class="form-control" id="fromPlace" />
+                            <span class="text-error hide" name="userInfo.fromPlaceMessage"></span>
+                        </div>
                     </div>
                     <fmt:formatDate value="${user.userInfo.birthDay}" pattern="yyyy-MM-dd" var="birthDay"/>
                     <div class="form-group">
-                        <label for="birthDay">出生日期</label>
-                        <form:input path="birthDayStr" type="text" data-enable-time="false" data-default-value="${birthDay}" value="${birthDay}" class="form-control flatpickr" id="birthDay" />
-                        <span class="text-error hide" name="birthDayStrMessage"></span>
+                        <label for="birthDay" class="col-xs-4 col-sm-4 col-md-2 control-label">出生日期</label>
+                        <div class="col-xs-8 col-sm-7 col-md-9">
+                            <form:input path="birthDayStr" type="text" data-enable-time="false" data-default-value="${birthDay}" value="${birthDay}" class="form-control flatpickr" id="birthDay" />
+                            <span class="text-error hide" name="birthDayStrMessage"></span>
+                        </div>
                     </div>
                     <div class="form-group">
-                        <label for="school">学校</label>
-                        <form:input path="user.userInfo.school" value="${user.userInfo.school}" type="text" class="form-control" id="school" maxlength="50"/>
-                        <span class="text-error hide" name="user.userInfo.schoolMessage"></span>
+                        <label for="school" class="col-xs-4 col-sm-4 col-md-2 control-label">学校</label>
+                        <div class="col-xs-8 col-sm-7 col-md-9">
+                            <form:input path="userInfo.school" value="${user.userInfo.school}" type="text" class="form-control" id="school" maxlength="50"/>
+                            <span class="text-error hide" name="userInfo.schoolMessage"></span>
+                        </div>
                     </div>
                     <div class="form-group">
-                        <label for="phone">手机号码</label>
-                        <form:input path="user.userInfo.phone" value="${user.userInfo.phone}" type="text" class="form-control" id="phone" maxlength="11"/>
-                        <span class="text-error hide" name="user.userInfo.phoneMessage"></span>
+                        <label for="phone" class="col-xs-4 col-sm-4 col-md-2 control-label">手机号码</label>
+                        <div class="col-xs-8 col-sm-7 col-md-9">
+                            <form:input path="userInfo.phone" value="${user.userInfo.phone}" type="text" class="form-control" id="phone" maxlength="11"/>
+                            <span class="text-error hide" name="userInfo.phoneMessage"></span>
+                        </div>
                     </div>
                     <div class="form-group">
-                        <label for="weight">体重</label>
-                        <form:input path="user.userInfo.weight" value="${user.userInfo.weight}" type="text" class="form-control" id="weight" placeholder="(斤)"/>
-                        <span class="text-error hide" name="user.userInfo.weightMessage"></span>
+                        <label for="weight" class="col-xs-4 col-sm-4 col-md-2 control-label">体重</label>
+                        <div class="col-xs-8 col-sm-7 col-md-9">
+                            <form:input path="userInfo.weight" value="${user.userInfo.weight}" type="text" class="form-control" id="weight" placeholder="(斤)"/>
+                            <span class="text-error hide" name="userInfo.weightMessage"></span>
+                        </div>
                     </div>
                     <div class="form-group">
-                        <label for="height">身高</label>
-                        <form:input path="user.userInfo.height" value="${user.userInfo.height}" type="text" class="form-control" id="height" placeholder="(CM)"/>
-                        <span class="text-error hide" name="user.userInfo.heightMessage"></span>
+                        <label for="height" class="col-xs-4 col-sm-4 col-md-2 control-label">身高</label>
+                        <div class="col-xs-8 col-sm-7 col-md-9">
+                            <form:input path="userInfo.height" value="${user.userInfo.height}" type="text" class="form-control" id="height" placeholder="(CM)"/>
+                            <span class="text-error hide" name="userInfo.heightMessage"></span>
+                        </div>
                     </div>
                     <div class="form-group">
-                        <label for="email">邮箱</label>
-                        <form:input path="user.userInfo.email" value="${user.userInfo.email}" type="email" class="form-control" id="email"/>
-                        <span class="text-error hide" name="user.userInfo.emailMessage"></span>
+                        <label for="email" class="col-xs-4 col-sm-4 col-md-2 control-label">邮箱</label>
+                        <div class="col-xs-8 col-sm-7 col-md-9">
+                            <form:input path="userInfo.email" value="${user.userInfo.email}" type="email" class="form-control" id="email"/>
+                            <span class="text-error hide" name="userInfo.emailMessage"></span>
+                        </div>
                     </div>
                     <div class="form-group">
-                        <label for="introduction">简介</label>
-                        <textarea name="user.userInfo.introduction" id="introduction" maxlength="200" class="form-control" style="resize: none;height: 100px;"><c:out value="${user.userInfo.introduction}"/></textarea>
-                        <span class="text-error hide" name="user.userInfo.introductionMessage"></span>
+                        <label for="introduction" class="col-xs-4 col-sm-4 col-md-2 control-label">简介</label>
+                        <div class="col-xs-8 col-sm-7 col-md-9">
+                            <textarea name="userInfo.introduction" id="introduction" maxlength="200" class="form-control" style="resize: none;height: 100px;"><c:out value="${user.userInfo.introduction}"/></textarea>
+                            <span class="text-error hide" name="userInfo.introductionMessage"></span>
+                        </div>
                     </div>
                 </form:form>
             </div>
@@ -416,19 +445,38 @@
 </div>
 
 <!-- 退出 -->
-<div class="modal fade" id="user-logout" tabindex="-1" role="dialog">
+<div class="modal fade" id="userLogout" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">退出</h4>
+                <h4 class="modal-title">提示</h4>
             </div>
             <div class="modal-body">
                 <p class="text-center logout-tip">你确定要退出吗？</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                <button type="button" class="btn btn-primary">确认</button>
+                <button type="button" class="btn btn-primary" onclick="window.location.href='${pageContext.request.contextPath}/logout'">确认</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%-- 修改用户信息确认界面 --%>
+<div class="modal fade" id="userConfirmModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">提示</h4>
+            </div>
+            <div class="modal-body">
+                <p class="text-center logout-tip">你确定要修改吗？</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" id="btnUserConfirmClose">关闭</button>
+                <button type="button" class="btn btn-primary" id="btnUserConfirm">确认</button>
             </div>
         </div>
     </div>
@@ -440,27 +488,48 @@
         $('#one-date, #more-date, #birthDay').flatpickr();
     });
 
+    // 修改用户信息
     $("#btnUserSubmit").on("click", function () {
         var validation = $("#userForm").data("formValidation");
         validation.validate();
         if (validation.isValid()) {
-
+            $("#userEdit").modal("hide");
+            $("#userConfirmModal").modal("show");
         }
+    });
+    $("#btnUserConfirm").on("click", function () {
+        var form = document.getElementById("userForm");
+        form.submit();
+    });
+    $("#btnUserConfirmClose").on("click", function () {
+        var form = document.getElementById("userForm");
+        form.reset();
+        $("#userForm").data("formValidation").destroy();
+        $("#passwordNode").removeClass("show").addClass("hide");
+        initValidation();
     });
 
     $("#resetPassword").on("change", function () {
         var resetI = $(this).val();
         var validation = $("#userForm").data("formValidation");
         if (resetI === "<%=CommonConstant.YES_NO.YES%>") {
-            validation.enableFieldValidators("user.password", true).revalidateField("user.password");
+            validation.enableFieldValidators("password", true).revalidateField("password");
             validation.enableFieldValidators("confirmPassword", true).revalidateField("confirmPassword");
-            $("#passwordNode").show();
+            $("#passwordNode").removeClass("hide").addClass("show");
         } else {
-            $("#passwordNode").hide();
-            validation.enableFieldValidators("user.password", false);
+            $("#passwordNode").removeClass("show").addClass("hide");
+            validation.enableFieldValidators("password", false);
             validation.enableFieldValidators("confirmPassword", false);
             $("#password").val("");
             $("#confirmPassword").val("");
+        }
+    });
+
+    $("#age").on("change", function () {
+        var age = $(this).val();
+        if (age && age.trim()) {
+            $(this).val(parseInt(age));
+            $(this).trigger("change");
         }
     });
 
@@ -493,11 +562,11 @@
                 validating: null
             },
             fields: {
-                'user.username':{
-                    message: '请填写用户名',
+                'userInfo.name':{
+                    message: '请填写姓名',
                     validators: {
                         notEmpty: {
-                            message: '请填写用户名'
+                            message: '请填写姓名'
                         },
                         stringLength: {
                             max: 20,
@@ -513,7 +582,7 @@
                         }
                     }
                 },
-                'user.password':{
+                password:{
                     enabled: false,
                     message: '请填写密码',
                     validators: {
@@ -527,16 +596,36 @@
                         }
                     }
                 },
-                'confirmPassword':{
+                confirmPassword:{
                     enabled: false,
                     message: '请确认密码',
                     validators: {
-                        notEmpty: {
-                            message: '请确认密码'
+                        callback: {
+                            callback: function (value, validator, $field) {
+                                var password = $("#password").val();
+                                if (!(password && password.trim())) {
+                                    return {
+                                        valid: false,
+                                        message: '请先填写密码'
+                                    };
+                                } else if (value && value.trim()) {
+                                    if (password != value) {
+                                        return {
+                                            valid: false,
+                                            message: '两次密码输入不一致'
+                                        };
+                                    }
+                                    return true;
+                                }
+                                return {
+                                    valid: false,
+                                    message: '请确认密码'
+                                };
+                            }
                         }
                     }
                 },
-                'user.userInfo.sex':{
+                'userInfo.sex':{
                     message: '请选择性别',
                     validators: {
                         notEmpty: {
@@ -544,18 +633,34 @@
                         }
                     }
                 },
-                'user.userInfo.age':{
+                'userInfo.age':{
                     message: '请输入合理的年龄',
                     validators: {
-                        integer: {
-                            max: 150,
-                            message: '请输入有效的年龄'
+                        notEmpty: {
+                            message: '请填写年龄'
+                        },
+                        callback: {
+                            message: '请输入合理的年龄',
+                            callback: function (value) {
+                                if (value && value.trim()) {
+                                    var age = parseInt(value);
+                                    if (age<150) {
+                                        return true;
+                                    } else {
+                                        return false;
+                                    }
+                                }
+                                return true;
+                            }
                         }
                     }
                 },
-                'user.userInfo.fromPlace':{
+                'userInfo.fromPlace':{
                     message: '请输入有效长度的字符',
                     validators: {
+                        notEmpty: {
+                            message: '请填写出生地'
+                        },
                         stringLength: {
                             max: 20,
                             message: '不能超过20个字符'
@@ -565,13 +670,16 @@
                 birthDayStr:{
                     message: '请输入有效日期',
                     validators: {
+                        notEmpty: {
+                            message: '请选择出生日期'
+                        },
                         date: {
                             format: 'YYYY-MM-DD',
                             message: '请输入有效日期'
                         }
                     }
                 },
-                'user.userInfo.school':{
+                'userInfo.school':{
                     message: '请输入有效长度的字符',
                     validators: {
                         stringLength: {
@@ -580,9 +688,12 @@
                         }
                     }
                 },
-                'user.userInfo.phone':{
+                'userInfo.phone':{
                     message: '请输入有效的手机号码',
                     validators: {
+                        notEmpty: {
+                            message: '请填写手机号码'
+                        },
                         stringLength: {
                             max: 11,
                             message: '不能超过11个字符'
@@ -593,40 +704,61 @@
                         }
                     }
                 },
-                'user.userInfo.weight':{
+                'userInfo.weight':{
                     message: '请输入有效的体重',
                     validators: {
-                        lessThan: {
-                            inclusive: false,
-                            max: 200,
-                            message: '请输入有效的体重'
+                        callback: {
+                            message: '请输入有效的体重',
+                            callback: function (value) {
+                                if (value && value.trim()) {
+                                    var weight = parseFloat(value).toFixed(2);
+                                    if (weight<250) {
+                                        return true;
+                                    } else {
+                                        return false;
+                                    }
+                                }
+                                return true;
+                            }
                         }
                     }
                 },
-                'user.userInfo.weight':{
+                'userInfo.height':{
                     message: '请输入有效的身高',
                     validators: {
-                        integer: {
-                            min: 50,
-                            message: '请输入有效的身高'
-                        },
-                        lessThan: {
-                            max: 250,
-                            message: '请输入有效的身高'
+                        callback: {
+                            message: '请输入有效的身高',
+                            callback: function (value) {
+                                if (value && value.trim()) {
+                                    var height = parseFloat(value).toFixed(2);
+                                    if (height<250) {
+                                        return true;
+                                    } else {
+                                        return false;
+                                    }
+                                }
+                                return true;
+                            }
                         }
                     }
                 },
-                'user.userInfo.email':{
+                'userInfo.email':{
                     message: '请输入有效的邮箱',
                     validators: {
+                        notEmpty: {
+                            message: '请填写邮箱'
+                        },
                         emailAddress: {
                             message: '请输入有效的邮箱'
                         }
                     }
                 },
-                'user.userInfo.introduction':{
+                'userInfo.introduction':{
                     message: '不能超过200个字符',
                     validators: {
+                        notEmpty: {
+                            message: '请填写自我介绍'
+                        },
                         stringLength: {
                             max: '200',
                             message: '不能超过200个字符'
@@ -635,12 +767,8 @@
                 }
             }
         }).on('err.field.fv', function(e, data) {
+            $("#userForm").find("i.form-control-feedback").remove();
 
-            //remove checkbox feedback icon
-            $("#userForm").find(".glyphicon-ok").css("display","none");
-            $("#userForm").find(".glyphicon-remove").css("display","none");
-
-            //mengxuan change
             if($(data.element).is('select')) {
                 $(data.element).next().addClass("has-error");
                 $(data.element).next().removeClass("has-success");
@@ -654,7 +782,7 @@
                 $(data.element).removeClass("has-success");
             }
         }).on('success.field.fv', function(e, data) {
-//            $("#btnSubmit").removeAttr("disabled");
+            $("#btnUserSubmit").removeAttr("disabled");
             if($(data.element).is('select')) {
                 $(data.element).next().removeClass("has-error");
                 $(data.element).next().addClass("has-success");
@@ -671,8 +799,7 @@
             $("#userForm").find("."+data.field+"Message").addClass("hide");
 
             //remove checkbox feedback icon
-            $("#userForm").find(".glyphicon-ok").css("display","none");
-            $("#userForm").find(".glyphicon-remove").css("display","none");
+            $("#userForm").find("i.form-control-feedback").remove();
         });
     }
 

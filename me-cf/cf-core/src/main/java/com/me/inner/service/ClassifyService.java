@@ -10,4 +10,10 @@ import java.util.List;
 public interface ClassifyService {
 
     List<ClassifyDTO> listClassify();
+
+    List<ClassifyDTO> listAllClassify();
+
+    void updateClassify(ClassifyDTO classify);
+
+    void saveClassify(ClassifyDTO classify);
 }

@@ -15,6 +15,8 @@ public class ClassifyDTO implements Serializable {
     private Integer classifyId;
     private String classifyName;
     private String classifyClass;
+    private Integer sequence;
+    private String status;
     private Date createDate;
     private String createBy;
     private Date updateDate;
@@ -22,6 +24,49 @@ public class ClassifyDTO implements Serializable {
 
     // operation and view
     private List<CategoryDTO> categoryList;
+    private Integer activeCategory;
+    private Integer closedCategory;
+    private String createDateStr;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Integer getSequence() {
+        return sequence;
+    }
+
+    public void setSequence(Integer sequence) {
+        this.sequence = sequence;
+    }
+
+    public String getCreateDateStr() {
+        return createDateStr;
+    }
+
+    public void setCreateDateStr(String createDateStr) {
+        this.createDateStr = createDateStr;
+    }
+
+    public Integer getActiveCategory() {
+        return activeCategory;
+    }
+
+    public void setActiveCategory(Integer activeCategory) {
+        this.activeCategory = activeCategory;
+    }
+
+    public Integer getClosedCategory() {
+        return closedCategory;
+    }
+
+    public void setClosedCategory(Integer closedCategory) {
+        this.closedCategory = closedCategory;
+    }
 
     public List<CategoryDTO> getCategoryList() {
         return categoryList;

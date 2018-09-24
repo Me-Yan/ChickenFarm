@@ -14,4 +14,9 @@ public class Constant {
         String MALE = "1";
         String FEMALE = "0";
     }
+
+    public interface Classify_Status {
+        String STABLED = "Stabled";
+        String VARIABLE = "Variable";
+    }
 }
