@@ -17,7 +17,7 @@
         FROM cf_category cg
         LEFT JOIN cf_classify cf ON cg.classifyId_n = cf.classifyId_n
         <if test="classifyId!=null">
-            WHERE cg.classifyId_n = #{classifyId}
+            WHERE cg.classifyId_n = #{classifyId, jdbcType=INTEGER}
         </if>
         ORDER BY cf.seq_c ASC, cg.seq_c ASC
     </select>
@@ -28,6 +28,48 @@
     
     <update id="closeAllCategory" parameterType="java.lang.Integer">
         UPDATE cf_category SET active_c = 'I' WHERE classifyId_n = #{classifyId, jdbcType=INTEGER} AND active_c = 'A'
+    </update>
+
+    <insert id="saveCategory" parameterType="com.me.inner.dto.CategoryDTO" keyColumn="categoryId_n" keyProperty="categoryId" useGeneratedKeys="true">
+        INSERT INTO cf_category
+        (
+            categoryName_m,
+            path_x,
+            classifyId_n,
+            seq_c,
+            active_c,
+            crtOn_dt,
+            crtBy_m
+        )
+        VALUES
+        (
+            #{categoryName, jdbcType=VARCHAR},
+            #{path, jdbcType=VARCHAR},
+            #{classifyId, jdbcType=INTEGER},
+            #{sequence, jdbcType=INTEGER},
+            #{active, jdbcType=CHAR},
+            #{createDate, jdbcType=TIMESTAMP},
+            #{createBy, jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <update id="updateCategory" parameterType="com.me.inner.dto.CategoryDTO">
+        UPDATE cf_category SET
+            categoryName_m = #{categoryName, jdbcType=VARCHAR},
+            path_x = #{path, jdbcType=VARCHAR},
+            classifyId_n = #{classifyId, jdbcType=VARCHAR},
+            seq_c = #{sequence, jdbcType=VARCHAR},
+            updOn_dt = #{updateDate, jdbcType=TIMESTAMP},
+            updBy_m = #{updateBy, jdbcType=VARCHAR}
+        WHERE categoryId_n = #{categoryId, jdbcType=INTEGER}
+    </update>
+
+    <update id="activeCategory" parameterType="java.lang.Integer">
+        UPDATE cf_category SET active_c = 'A' WHERE categoryId_n = #{categoryId, jdbcType=INTEGER}
+    </update>
+
+    <update id="closeCategory" parameterType="java.lang.Integer">
+        UPDATE cf_category SET active_c = 'I' WHERE categoryId_n = #{categoryId, jdbcType=INTEGER}
     </update>
 
 </mapper>

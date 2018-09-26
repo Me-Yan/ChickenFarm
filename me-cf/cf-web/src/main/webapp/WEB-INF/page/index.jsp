@@ -88,8 +88,8 @@
                         <a href="${pageContext.request.contextPath}/dashboard" target="index-right"><i class="fa fa-dashboard fa-fw"></i> 首页</a>
                     </li>
                     <c:if test="${not empty classifyList}">
-                        <li>
-                            <c:forEach items="${classifyList}" var="classify">
+                        <c:forEach items="${classifyList}" var="classify">
+                            <li>
                                 <a href="javascript:void(0)"><i class="${classify.classifyClass}"></i> ${classify.classifyName}<span class="fa arrow"></span></a>
                                 <c:if test="${not empty classify.categoryList}">
                                     <ul class="nav nav-second-level">
@@ -98,8 +98,8 @@
                                         </c:forEach>
                                     </ul>
                                 </c:if>
-                            </c:forEach>
-                        </li>
+                            </li>
+                        </c:forEach>
                     </c:if>
                 </ul>
             </div>

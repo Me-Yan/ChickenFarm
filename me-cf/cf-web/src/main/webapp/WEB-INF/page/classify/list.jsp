@@ -20,7 +20,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-12 text-right" style="margin-bottom: 10px;"><button type="button" class="btn btn-success" data-toggle="modal" data-target="#newFormModal">新建</button></div>
+            <div class="col-lg-12 text-right" style="margin-bottom: 10px;"><button type="button" class="btn btn-success" id="btnNew">新建</button></div>
         </div>
         <div class="row">
             <div class="col-lg-12">
@@ -115,7 +115,7 @@
     </div>
 
     <%-- 新建Modal --%>
-    <div class="modal fade" id="newClassifyModal" tabindex="-1" role="dialog">
+    <div class="modal fade" id="newModal" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -134,7 +134,7 @@
     </div>
 
     <%-- 修改Modal --%>
-    <div class="modal fade" id="amendClassifyModal" tabindex="-1" role="dialog">
+    <div class="modal fade" id="amendModal" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -210,65 +210,105 @@
 
 <script>
     var tableIndex = 1;
+    var classifyId = "";
     $(function () {
-        initNewValidation();
-        initAmendValidation();
         initTable();
     });
     // 新建
+    function clearNewForm() {
+        $("#newClassifyName").val("");
+        $("#newClassifyClass").val("");
+        $("#newSequence").val("");
+    }
+    $("#btnNew").on("click", function () {
+        $("#newFormModal").modal({
+            backdrop: 'static',
+            show: true
+        });
+    });
+    $("#newFormModal").on("show.bs.modal", function () {
+        clearNewForm();
+        initNewValidation();
+    });
+    $("#newFormModal").on("hidden.bs.modal", function () {
+        $("#newClassifyForm").data("formValidation").destroy();
+    });
     $("#newSubmitClassify").on("click", function () {
         var validation = $("#newClassifyForm").data("formValidation");
         validation.validate();
         if (validation.isValid()) {
             $("#newFormModal").modal("hide");
-            $("#newClassifyModal").modal("show");
+            $("#newModal").modal("show");
         }
     });
     $("#newConfirmClassify").on("click", function () {
+        $("#newModal").modal("hide");
         $.ajax({
             url: '${pageContext.request.contextPath}/classify/newClassify',
             data: $("#newClassifyForm").serialize(),
             type: 'POST',
             success: function (result) {
-                $("#newClassifyModal").modal("hide");
                 if (result.success) {
                     $("#outcomeContent").html('添加成功！');
                     $("#classifyTable").bootstrapTable("refresh");
                     tableIndex = 1;
                 } else {
-                    $("#outcomeContent").html('添加失败');
+                    $("#outcomeContent").html('添加失败，请重新操作！');
                 }
                 $("#outcomeModal").modal("show");
             }
         });
     });
-    $("#newClassifyModal").on("hidden.bs.modal", function () {
-        $("#newClassifyName").val("");
-        $("#newClassifyClass").val("");
-        $("#newSequence").val("");
-        $("#newClassifyForm").data("formValidation").destroy();
-        initNewValidation();
-    });
 
     // 修改
-    var classifyId = "";
     function amendClassify(classifyId, classifyName,classifyClass, sequence) {
-        $("#amendFormModal").modal("show");
         $("#amendClassifyId").val(classifyId);
-        $("#amendClassifyName").val(classifyName).trigger("change");
-        $("#amendClassifyClass").val(classifyClass).trigger("change");
-        $("#amendSequence").val(sequence).trigger("change");
+        $("#amendClassifyName").val(classifyName);
+        $("#amendClassifyClass").val(classifyClass);
+        $("#amendSequence").val(sequence);
+        initAmendValidation();
+        $("#amendFormModal").modal({
+            backdrop: 'static',
+            show: true
+        });
     }
+    $("#amendFormModal").on("hidden.bs.modal", function () {
+        $("#amendClassifyForm").data("formValidation").destroy();
+    });
+    $("#amendSubmitClassify").on("click", function () {
+        var validation = $("#amendClassifyForm").data("formValidation");
+        validation.validate();
+        if (validation.isValid()) {
+            $("#amendFormModal").modal("hide");
+            $("#amendModal").modal("show");
+        }
+    });
+    $("#amendConfirmClassify").on("click", function () {
+        $("#amendModal").modal("hide");
+        $.ajax({
+            url: "${pageContext.request.contextPath}/classify/updateClassify",
+            data: $("#amendClassifyForm").serialize(),
+            type: 'POST',
+            success: function (result) {
+                if (result.success) {
+                    $("#outcomeContent").html("修改成功！");
+                    $("#classifyTable").bootstrapTable("refresh");
+                    tableIndex = 1;
+                } else {
+                    $("#outcomeContent").html("修改失败！");
+                }
+                $("#outcomeModal").modal("show");
+            }
+        });
+    });
+
+    // 开放链接
     function activeClassify(id) {
         $("#activeModal").modal("show");
         classifyId =  id;
     }
-    function closeClassify(id) {
-        $("#closeModal").modal("show");
-        classifyId =  id;
-    }
-
     $("#btnActive").on("click", function () {
+        $("#activeModal").modal("hide");
         $.ajax({
             url: '${pageContext.request.contextPath}/classify/activeClassify',
             data: {
@@ -276,7 +316,6 @@
             },
             type: 'POST',
             success: function (result) {
-                $("#activeModal").modal("hide");
                 if (result.success) {
                     $("#outcomeContent").html("全部开放成功！");
                     $("#classifyTable").bootstrapTable("refresh");
@@ -288,7 +327,14 @@
             }
         });
     });
+
+    // 关闭链接
+    function closeClassify(id) {
+        $("#closeModal").modal("show");
+        classifyId =  id;
+    }
     $("#btnClose").on("click", function () {
+        $("#closeModal").modal("hide");
         $.ajax({
             url: '${pageContext.request.contextPath}/classify/closeClassify',
             data: {
@@ -296,49 +342,12 @@
             },
             type: 'POST',
             success: function (result) {
-                $("#closeModal").modal("hide");
                 if (result.success) {
                     $("#outcomeContent").html("全部关闭成功！");
                     $("#classifyTable").bootstrapTable("refresh");
                     tableIndex = 1;
                 } else {
                     $("#outcomeContent").html("关闭失败，请重新操作！");
-                }
-                $("#outcomeModal").modal("show");
-            }
-        });
-    });
-    $("#amendSubmitClassify").on("click", function () {
-        var validation = $("#amendClassifyForm").data("formValidation");
-        validation.validate();
-        if (validation.isValid()) {
-            $("#amendFormModal").modal("hide");
-            $("#amendClassifyModal").modal("show");
-        }
-    });
-
-    $("#amendClassifyModal").on("hidden.bs.modal", function () {
-        $("#amendClassifyId").val("");
-        $("#amendClassifyName").val("");
-        $("#amendClassifyClass").val("");
-        $("#amendSequence").val("");
-        $("#amendClassifyForm").data("formValidation").destroy();
-        initAmendValidation();
-    });
-
-    $("#amendConfirmClassify").on("click", function () {
-        $.ajax({
-            url: "${pageContext.request.contextPath}/classify/updateClassify",
-            data: $("#amendClassifyForm").serialize(),
-            type: 'POST',
-            success: function (result) {
-                $("#amendClassifyModal").modal("hide");
-                if (result.success) {
-                    $("#outcomeContent").html("修改成功！");
-                    $("#classifyTable").bootstrapTable("refresh");
-                    tableIndex = 1;
-                } else {
-                    $("#outcomeContent").html("修改失败！");
                 }
                 $("#outcomeModal").modal("show");
             }
@@ -375,7 +384,7 @@
         message: '请填写序列号',
         validators: {
             notEmpty: {
-                message: '请填写样式'
+                message: '请填写序列号'
             },
             integer: {
                 max: 100,
@@ -578,10 +587,10 @@
 
                         if ("<%=Constant.Classify_Status.VARIABLE%>" === row.status) {
                             if (row.closedCategory>0) {
-                                content += '<button type="button" class="btn btn-success" onclick="activeClassify('+row.classifyId+')">开放</button>';
+                                content += '<button type="button" class="btn btn-success" onclick="activeClassify(\''+row.classifyId+'\')">开放</button>';
                             }
                             if (row.activeCategory>0) {
-                                content += '<button type="button" class="btn btn-danger" onclick="closeClassify('+row.classifyId+')">关闭</button>';
+                                content += '<button type="button" class="btn btn-danger" onclick="closeClassify(\''+row.classifyId+'\')">关闭</button>';
                             }
                         }
 

@@ -14,4 +14,12 @@ public interface CategoryService {
     void activeAllCategory(Integer classifyId);
 
     void closeAllCategory(Integer classifyId);
+
+    void saveCategory(CategoryDTO category);
+
+    void updateCategory(CategoryDTO category);
+
+    void activeCategory(Integer categoryId);
+
+    void closeCategory(Integer categoryId);
 }
