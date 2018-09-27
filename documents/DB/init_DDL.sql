@@ -31,6 +31,7 @@ DROP TABLE IF EXISTS CF_record;
 CREATE TABLE CF_record (
 		recordId_n INT UNSIGNED AUTO_INCREMENT NOT NULL,
 		categoryId_n INT UNSIGNED NOT NULL,
+		type_x VARCHAR(10) NOT NULL,
 		late_c CHAR(1) NOT NULL,
 		count_n INT NULL,
 		weight_n DOUBLE NULL,

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.me.inner.mapper.RecordMapper">
+    
+    <select id="listRecordByType" parameterType="java.lang.String" resultType="com.me.inner.dto.RecordDTO">
+        SELECT
+            recordId_n AS recordId,
+            categoryId_n AS categoryId,
+            type_x AS type,
+            late_c AS late,
+            count_n AS count,
+            weight_n AS weight,
+            price_n AS price,
+            amount_n AS amount,
+            desc_x AS description,
+            record_dt AS recordDate,
+            active_c AS active,
+            crtBy_m AS createBy,
+            crtOn_dt AS createDate
+        FROM cf_record
+        WHERE type_x = #{type} AND active_c = 'A'
+        ORDER BY record_dt DESC, crtOn_dt DESC
+    </select>
+
+</mapper>

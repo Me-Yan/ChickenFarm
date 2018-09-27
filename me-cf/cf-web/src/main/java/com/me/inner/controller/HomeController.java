@@ -2,12 +2,12 @@ package com.me.inner.controller;
 
 import com.google.common.collect.Maps;
 import com.me.inner.constant.CommonConstant;
-import com.me.inner.dto.BaseUserDetails;
-import com.me.inner.dto.ClassifyDTO;
-import com.me.inner.dto.UserDTO;
-import com.me.inner.dto.UserInfoDTO;
+import com.me.inner.constant.Constant;
+import com.me.inner.dto.*;
 import com.me.inner.service.ClassifyService;
+import com.me.inner.service.CodeService;
 import com.me.inner.service.UserService;
+import com.me.inner.util.CommonUtil;
 import com.me.inner.util.DateUtil;
 import com.me.inner.util.SecurityUtil;
 import com.me.inner.vo.UserVO;
@@ -43,9 +43,11 @@ public class HomeController extends BaseController {
     private ClassifyService classifyService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private CodeService codeService;
 
     @RequestMapping("index")
-    public ModelAndView index() {
+    public ModelAndView index() throws Exception {
         logger.debug("Execute Method index");
 
         Map<String, Object> model = Maps.newHashMap();
@@ -53,12 +55,15 @@ public class HomeController extends BaseController {
 
         List<ClassifyDTO> classifyList = classifyService.listClassify();
         UserDTO user = userService.getUserByUserId(userDetails.getUserId());
+        List<CodeDTO> recodeTypeList = codeService.listCodeByType(Constant.Code_Type.RECORD_TYPE);
 
         model.put("user", user);
         model.put("userForm", new UserVO());
         model.put("classifyList", classifyList);
+        model.put("recordTypeList", recodeTypeList);
+        model.put("curDate", DateUtil.formatDate(new Date(), CommonConstant.Pattern.YYYY_MM_DD));
 
-        return new ModelAndView("index", model);
+        return new ModelAndView("index/index", model);
     }
 
     @RequestMapping("dashboard")

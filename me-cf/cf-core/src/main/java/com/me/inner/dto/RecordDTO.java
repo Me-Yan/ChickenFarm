@@ -13,6 +13,7 @@ public class RecordDTO implements Serializable {
     // DB Columns
     private Integer recordId;
     private Integer categoryId;
+    private String type;
     private String late;
     private Integer count;
     private Double weight;
@@ -23,6 +24,25 @@ public class RecordDTO implements Serializable {
     private String active;
     private Date createDate;
     private String createBy;
+
+    // view and operation
+    private String recordDateStr;
+
+    public String getRecordDateStr() {
+        return recordDateStr;
+    }
+
+    public void setRecordDateStr(String recordDateStr) {
+        this.recordDateStr = recordDateStr;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 
     public Integer getRecordId() {
         return recordId;
