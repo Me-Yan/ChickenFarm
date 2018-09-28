@@ -12,7 +12,6 @@ public class RecordDTO implements Serializable {
 
     // DB Columns
     private Integer recordId;
-    private Integer categoryId;
     private String type;
     private String late;
     private Integer count;
@@ -50,14 +49,6 @@ public class RecordDTO implements Serializable {
 
     public void setRecordId(Integer recordId) {
         this.recordId = recordId;
-    }
-
-    public Integer getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(Integer categoryId) {
-        this.categoryId = categoryId;
     }
 
     public String getLate() {

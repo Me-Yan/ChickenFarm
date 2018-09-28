@@ -21,6 +21,7 @@ public class Constant {
     }
 
     public interface Record_Type {
+        String MORE = "more";
         String WEIGHT = "weight";
         String PRICE = "price";
         String AMOUNT = "amount";

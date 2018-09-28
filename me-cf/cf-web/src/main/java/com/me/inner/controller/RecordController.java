@@ -2,19 +2,22 @@ package com.me.inner.controller;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.me.inner.constant.CommonConstant;
 import com.me.inner.constant.Constant;
 import com.me.inner.dto.RecordDTO;
+import com.me.inner.dto.ResponseData;
 import com.me.inner.service.RecordService;
+import com.me.inner.util.DateUtil;
+import com.me.inner.util.SecurityUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -51,5 +54,38 @@ public class RecordController extends BaseController {
         logger.debug("Execute Method listData...");
 
         return recordService.listRecordByType(type);
+    }
+
+    @RequestMapping("newRecord")
+    @ResponseBody
+    public ResponseData newRecord(@ModelAttribute("recordForm") RecordDTO recordForm) throws Exception {
+        logger.debug("Execute Method newRecord...");
+
+        try {
+            recordService.saveRecord(recordForm);
+        } catch (Exception e) {
+            logger.error("occur a error when save record", e);
+            return new ResponseData(false);
+        }
+
+        return new ResponseData(true);
+    }
+
+    @RequestMapping("checkRecordExist")
+    @ResponseBody
+    public ResponseData checkRecordExist(@RequestParam("type") String type, @RequestParam("recordDateStr") String recordDateStr) {
+        logger.debug("Execute Method checkRecordExist...");
+
+        try {
+            boolean outcome = recordService.checkRecordExist(type, recordDateStr);
+            if (outcome) {
+                return new ResponseData(false);
+            }
+        } catch (Exception e) {
+            logger.error("occur a error when check reocord", e);
+            return new ResponseData(false);
+        }
+
+        return new ResponseData(true);
     }
 }

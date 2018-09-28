@@ -10,4 +10,8 @@ import java.util.List;
 public interface RecordService {
 
     List<RecordDTO> listRecordByType(String type);
+
+    void saveRecord(RecordDTO record) throws Exception;
+
+    boolean checkRecordExist(String type, String recordDate);
 }

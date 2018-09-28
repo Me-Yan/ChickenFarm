@@ -1,7 +1,9 @@
 package com.me.inner.mapper;
 
 import com.me.inner.dto.RecordDTO;
+import org.apache.ibatis.annotations.Param;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -10,4 +12,10 @@ import java.util.List;
 public interface RecordMapper {
 
     List<RecordDTO> listRecordByType(String type);
+
+    void saveRecord(RecordDTO record);
+
+    Integer countRecord(@Param("type") String type, @Param("recordDate") String recordDate);
+
+    void deleteRecord(@Param("type") String type, @Param("recordDate") Date recordDate);
 }

@@ -22,4 +22,51 @@
         ORDER BY record_dt DESC, crtOn_dt DESC
     </select>
 
+    <insert id="saveRecord" parameterType="com.me.inner.dto.RecordDTO" keyColumn="recordId_n" keyProperty="recordId" useGeneratedKeys="true">
+        INSERT INTO cf_record
+        (
+            type_x,
+            late_c,
+            count_n,
+            weight_n,
+            price_n,
+            amount_n,
+            desc_x,
+            record_dt,
+            active_c,
+            crtBy_m,
+            crtOn_dt
+        )
+        VALUES
+        (
+            #{type, jdbcType=VARCHAR},
+            #{late, jdbcType=CHAR},
+            #{count, jdbcType=INTEGER},
+            #{weight, jdbcType=DOUBLE},
+            #{price, jdbcType=DOUBLE},
+            #{amount, jdbcType=DOUBLE},
+            #{description, jdbcType=VARCHAR},
+            #{recordDate, jdbcType=TIMESTAMP},
+            #{active, jdbcType=CHAR},
+            #{createBy, jdbcType=VARCHAR},
+            #{createDate, jdbcType=TIMESTAMP}
+        )
+    </insert>
+    
+    <update id="deleteRecord">
+        UPDATE cf_record SET active_c = 'I'
+        <trim prefix="WHERE" prefixOverrides="AND">
+            <if test="type!=null and type!=''">
+                AND type_x = #{type, jdbcType=VARCHAR}
+            </if>
+            <if test="recordDate!=null">
+                AND record_dt = #{recordDate, jdbcType=TIMESTAMP}
+            </if>
+        </trim>
+    </update>
+
+    <select id="countRecord" resultType="java.lang.Integer">
+        SELECT COUNT(1) FROM cf_record WHERE type_x = #{type, jdbcType=VARCHAR} AND DATE_FORMAT(record_dt, '%Y-%m-%d') = #{recordDate, jdbcType=TIMESTAMP}
+    </select>
+
 </mapper>

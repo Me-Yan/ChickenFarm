@@ -25,6 +25,7 @@
     <script src="${pageContext.request.contextPath}/resources/scripts/index/sb-bootstrap.js"></script>
     <script src="${pageContext.request.contextPath}/resources/scripts/index/metisMenu.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/plugins/datetime-picker/flatpickr.min.js"></script>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/styles/common.css">
 
     <style>
         .field-type {
@@ -57,8 +58,8 @@
                         <i class="fa fa-plus-circle"></i>&nbsp;&nbsp;<span>正常添加</span>
                     </li>
                     <li class="divider"></li>
-                    <li><a href="#add-one" data-toggle="modal" data-target="#add-one">单条数据</a></li>
-                    <li><a href="#add-more" data-toggle="modal" data-target="#add-more">销售数据</a></li>
+                    <li><a class="cursor-pointer" id="btnOne">单条数据</a></li>
+                    <li><a class="cursor-pointer" id="btnMore">销售数据</a></li>
                     <li class="divider"></li>
                     <li class="disabled text-center">
                         <i class="fa fa-calendar-plus-o"></i>&nbsp;&nbsp;<span>追加数据</span>
@@ -163,10 +164,41 @@
     </div>
 </div>
 
+<div class="modal fade" id="outcomeModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">提示</h4>
+            </div>
+            <div class="modal-body">
+                <p class="text-center" id="outcomeContent"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <%@ include file="record.jsp" %>
 <%@ include file="user.jsp" %>
 
 <script>
+    $("#btnOne").on("click", function () {
+       $("#oneFormModal").modal({
+           backdrop: 'static',
+           show: true
+       });
+    });
+
+    $("#btnMore").on("click", function () {
+        $("#moreFormModal").modal({
+            backdrop: 'static',
+            show: true
+        });
+    });
+
     function changeFrameHeight() {
         var ifm = document.getElementById("index-right");
         ifm.height = document.documentElement.clientHeight;

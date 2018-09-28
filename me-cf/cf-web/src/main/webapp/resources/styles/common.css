@@ -27,3 +27,8 @@
 .table-responsive {
     border: none!important;
 }
+
+/* 鼠标形状 */
+.cursor-pointer {
+    cursor: pointer;
+}
