@@ -54,19 +54,8 @@
                     <i class="fa fa-plus fa-fw"></i> <i class="fa fa-caret-down"></i>
                 </a>
                 <ul class="dropdown-menu dropdown-alerts">
-                    <li class="disabled text-center">
-                        <i class="fa fa-plus-circle"></i>&nbsp;&nbsp;<span>正常添加</span>
-                    </li>
-                    <li class="divider"></li>
                     <li><a class="cursor-pointer" id="btnOne">单条数据</a></li>
                     <li><a class="cursor-pointer" id="btnMore">销售数据</a></li>
-                    <li class="divider"></li>
-                    <li class="disabled text-center">
-                        <i class="fa fa-calendar-plus-o"></i>&nbsp;&nbsp;<span>追加数据</span>
-                    </li>
-                    <li class="divider"></li>
-                    <li><a href="#add-one" data-toggle="modal" data-target="#add-one">单条数据</a></li>
-                    <li><a href="#add-more" data-toggle="modal" data-target="#add-more">销售数据</a></li>
                 </ul>
             </li>
             <li class="dropdown">
@@ -120,50 +109,6 @@
 
 </div>
 
-<!-- 添加销售记录弹窗表单 -->
-<div class="modal fade" id="add-more" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">售卖</h4>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="form-group">
-                        <label for="more-date">日期</label>
-                        <input type="text" name="" class="form-control flatpickr" data-date-format="Y-m-d" data-enable-time="false" id="more-date" data-date-format="yyyy-mm-dd" readonly />
-                    </div>
-                    <div class="form-group">
-                        <label for="more-weight">重量</label>
-                        <input type="text" class="form-control" id="more-weight">
-                    </div>
-                    <div class="form-group">
-                        <label for="more-price">单价</label>
-                        <input type="text" class="form-control" id="more-price">
-                    </div>
-                    <div class="form-group">
-                        <label for="more-amount">金额</label>
-                        <input type="text" class="form-control" id="more-amount" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label for="more-actual-amount">实际金额</label>
-                        <input type="text" class="form-control" id="more-actual-amount">
-                    </div>
-                    <div class="form-group">
-                        <label for="more-desc">备注</label>
-                        <input type="text" name="" class="form-control" id="more-desc" />
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                <button type="button" class="btn btn-primary">确认</button>
-            </div>
-        </div>
-    </div>
-</div>
-
 <div class="modal fade" id="outcomeModal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -183,6 +128,7 @@
 
 <%@ include file="record.jsp" %>
 <%@ include file="user.jsp" %>
+<%@ include file="sale.jsp" %>
 
 <script>
     $("#btnOne").on("click", function () {

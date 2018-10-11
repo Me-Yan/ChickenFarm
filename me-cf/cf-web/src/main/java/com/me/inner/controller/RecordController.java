@@ -71,6 +71,7 @@ public class RecordController extends BaseController {
         return new ResponseData(true);
     }
 
+    //TODO : currently, it is not used
     @RequestMapping("checkRecordExist")
     @ResponseBody
     public ResponseData checkRecordExist(@RequestParam("type") String type, @RequestParam("recordDateStr") String recordDateStr) {

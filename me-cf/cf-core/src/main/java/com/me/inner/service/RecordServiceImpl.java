@@ -52,9 +52,9 @@ public class RecordServiceImpl implements RecordService {
             record.setCreateDate(curDate);
             record.setCreateBy(username);
 
+            recordMapper.deleteRecord(record.getType(), record.getRecordDate());
             recordMapper.saveRecord(record);
         } else {
-            Integer count = record.getCount();
             Double weight = record.getWeight();
             Double price = record.getPrice();
             Double amount = record.getAmount();
@@ -63,23 +63,14 @@ public class RecordServiceImpl implements RecordService {
             RecordDTO moreRecord = new RecordDTO();
             moreRecord.setLate(late);
             moreRecord.setType(Constant.Record_Type.MORE);
-            moreRecord.setCount(count);
             moreRecord.setWeight(weight);
             moreRecord.setPrice(price);
             moreRecord.setAmount(amount);
             moreRecord.setDescription(description);
             moreRecord.setRecordDate(recordDate);
+            moreRecord.setActive(CommonConstant.IN_ACTIVE.ACTIVE);
             moreRecord.setCreateBy(username);
             moreRecord.setCreateDate(curDate);
-
-            RecordDTO countRecord = new RecordDTO();
-            countRecord.setLate(late);
-            countRecord.setType(Constant.Record_Type.COUNT);
-            countRecord.setCount(count);
-            countRecord.setDescription(description);
-            countRecord.setRecordDate(recordDate);
-            countRecord.setCreateBy(username);
-            countRecord.setCreateDate(curDate);
 
             RecordDTO weightRecord = new RecordDTO();
             weightRecord.setLate(late);
@@ -87,6 +78,7 @@ public class RecordServiceImpl implements RecordService {
             weightRecord.setWeight(weight);
             weightRecord.setDescription(description);
             weightRecord.setRecordDate(recordDate);
+            weightRecord.setActive(CommonConstant.IN_ACTIVE.ACTIVE);
             weightRecord.setCreateBy(username);
             weightRecord.setCreateDate(curDate);
 
@@ -96,6 +88,7 @@ public class RecordServiceImpl implements RecordService {
             priceRecord.setPrice(price);
             priceRecord.setDescription(description);
             priceRecord.setRecordDate(recordDate);
+            priceRecord.setActive(CommonConstant.IN_ACTIVE.ACTIVE);
             priceRecord.setCreateBy(username);
             priceRecord.setCreateDate(curDate);
 
@@ -105,13 +98,13 @@ public class RecordServiceImpl implements RecordService {
             amountRecord.setAmount(amount);
             amountRecord.setDescription(description);
             amountRecord.setRecordDate(recordDate);
+            amountRecord.setActive(CommonConstant.IN_ACTIVE.ACTIVE);
             amountRecord.setCreateBy(username);
             amountRecord.setCreateDate(curDate);
 
             recordMapper.deleteRecord(null, recordDate);
 
             recordMapper.saveRecord(moreRecord);
-            recordMapper.saveRecord(countRecord);
             recordMapper.saveRecord(weightRecord);
             recordMapper.saveRecord(priceRecord);
             recordMapper.saveRecord(amountRecord);
