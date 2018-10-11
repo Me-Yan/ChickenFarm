@@ -16,16 +16,16 @@ public class Constant {
     }
 
     public interface Classify_Status {
-        String STABLED = "Stabled";
-        String VARIABLE = "Variable";
+        String STABLED = "Stabled";     // 不可关闭的
+        String VARIABLE = "Variable";   // 可关闭的
     }
 
     public interface Record_Type {
-        String MORE = "more";
-        String WEIGHT = "weight";
-        String PRICE = "price";
-        String AMOUNT = "amount";
-        String COUNT = "count";
+        String MORE = "more";       // 销售数据
+        String WEIGHT = "weight";   // 重量
+        String PRICE = "price";     // 价格
+        String AMOUNT = "amount";   // 金额
+        String COUNT = "count";     // 鸡的损失数量
     }
 
     public interface Code_Type {
