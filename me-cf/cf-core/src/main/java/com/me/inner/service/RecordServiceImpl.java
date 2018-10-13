@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -26,10 +27,23 @@ public class RecordServiceImpl implements RecordService {
     @Autowired
     private RecordMapper recordMapper;
 
-    public List<RecordDTO> listRecordByType(String type) {
+    public List<RecordDTO> listRecordByCriteria(String type, String startDate, String endDate) throws Exception {
         logger.debug("Execute Method listRecordByType...");
 
-        return recordMapper.listRecordByType(type);
+        Date start = null;
+        Date end = null;
+        if (StringUtils.isNotBlank(startDate)) {
+            start = DateUtil.parseDate(startDate, CommonConstant.Pattern.YYYY_MM_DD);
+        }
+        if (StringUtils.isNotBlank(endDate)) {
+            end = DateUtil.parseDate(endDate, CommonConstant.Pattern.YYYY_MM_DD);
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(end);
+            calendar.add(Calendar.DAY_OF_MONTH, 1);
+            end = calendar.getTime();
+        }
+
+        return recordMapper.listRecordByCriteria(type, start, end);
     }
 
     public void saveRecord(RecordDTO record) throws Exception {

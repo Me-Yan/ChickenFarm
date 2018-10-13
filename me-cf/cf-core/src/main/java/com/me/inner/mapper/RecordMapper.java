@@ -11,7 +11,7 @@ import java.util.List;
  */
 public interface RecordMapper {
 
-    List<RecordDTO> listRecordByType(String type);
+    List<RecordDTO> listRecordByCriteria(@Param("type") String type, @Param("startDate") Date startDate, @Param("endDate") Date endDate);
 
     void saveRecord(RecordDTO record);
 

@@ -26,6 +26,15 @@ public class RecordDTO implements Serializable {
 
     // view and operation
     private String recordDateStr;
+    private String typeDisplay;
+
+    public String getTypeDisplay() {
+        return typeDisplay;
+    }
+
+    public void setTypeDisplay(String typeDisplay) {
+        this.typeDisplay = typeDisplay;
+    }
 
     public String getRecordDateStr() {
         return recordDateStr;

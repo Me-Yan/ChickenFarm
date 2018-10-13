@@ -2,24 +2,29 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.me.inner.mapper.RecordMapper">
     
-    <select id="listRecordByType" parameterType="java.lang.String" resultType="com.me.inner.dto.RecordDTO">
+    <select id="listRecordByCriteria" parameterType="java.lang.String" resultType="com.me.inner.dto.RecordDTO">
         SELECT
-            recordId_n AS recordId,
-            categoryId_n AS categoryId,
-            type_x AS type,
-            late_c AS late,
-            count_n AS count,
-            weight_n AS weight,
-            price_n AS price,
-            amount_n AS amount,
-            desc_x AS description,
-            record_dt AS recordDate,
-            active_c AS active,
-            crtBy_m AS createBy,
-            crtOn_dt AS createDate
-        FROM cf_record
-        WHERE type_x = #{type} AND active_c = 'A'
-        ORDER BY record_dt DESC, crtOn_dt DESC
+            r.recordId_n AS recordId,
+            r.type_x AS type,
+            r.late_c AS late,
+            r.count_n AS count,
+            r.weight_n AS weight,
+            r.price_n AS price,
+            r.amount_n AS amount,
+            r.desc_x AS description,
+            r.record_dt AS recordDate,
+            DATE_FORMAT(r.record_dt, '%Y-%m-%d') AS recordDateStr,
+            r.active_c AS active,
+            r.crtBy_m AS createBy,
+            r.crtOn_dt AS createDate,
+            c.value_x AS typeDisplay
+        FROM cf_record r
+        LEFT JOIN cf_code c ON r.type_x = c.name_x
+        WHERE r.type_x = #{type} AND r.active_c = 'A'
+        <if test="startDate!=null and endDate!=null">
+            r.record_dt BETWEEN #{startDate} AND #{endDate}
+        </if>
+        ORDER BY r.record_dt DESC, r.crtOn_dt DESC
     </select>
 
     <insert id="saveRecord" parameterType="com.me.inner.dto.RecordDTO" keyColumn="recordId_n" keyProperty="recordId" useGeneratedKeys="true">

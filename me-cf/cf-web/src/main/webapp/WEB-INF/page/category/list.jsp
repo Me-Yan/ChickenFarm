@@ -108,7 +108,7 @@
                 <h4 class="modal-title">新建</h4>
             </div>
             <div class="modal-body">
-                <form:form action="${pageContext.request.contextPath}/category/udpateCategory" cssClass="form-horizontal" id="amendCategoryForm" method="post">
+                <form:form action="${pageContext.request.contextPath}/category/updateCategory" cssClass="form-horizontal" id="amendCategoryForm" method="post">
                     <input hidden name="categoryId" id="amendCategoryId" />
 
                     <div class="form-group">

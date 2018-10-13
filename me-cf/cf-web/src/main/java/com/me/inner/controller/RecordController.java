@@ -4,8 +4,10 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.me.inner.constant.CommonConstant;
 import com.me.inner.constant.Constant;
+import com.me.inner.dto.CodeDTO;
 import com.me.inner.dto.RecordDTO;
 import com.me.inner.dto.ResponseData;
+import com.me.inner.service.CodeService;
 import com.me.inner.service.RecordService;
 import com.me.inner.util.DateUtil;
 import com.me.inner.util.SecurityUtil;
@@ -17,6 +19,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +35,8 @@ public class RecordController extends BaseController {
 
     @Autowired
     private RecordService recordService;
+    @Autowired
+    private CodeService codeService;
 
     @RequestMapping("list/{type}")
     public ModelAndView listWeight(@PathVariable("type") String type) {
@@ -50,10 +55,10 @@ public class RecordController extends BaseController {
 
     @RequestMapping("listData")
     @ResponseBody
-    public List<RecordDTO> listData(@RequestParam("type") String type) {
+    public List<RecordDTO> listData(@RequestParam("type") String type) throws Exception {
         logger.debug("Execute Method listData...");
 
-        return recordService.listRecordByType(type);
+        return recordService.listRecordByCriteria(type, null, null);
     }
 
     @RequestMapping("newRecord")
@@ -71,22 +76,26 @@ public class RecordController extends BaseController {
         return new ResponseData(true);
     }
 
-    //TODO : currently, it is not used
-    @RequestMapping("checkRecordExist")
+    @RequestMapping("search")
+    public ModelAndView search() {
+        logger.debug("Execute Method search...");
+
+        Map<String, Object> model = Maps.newHashMap();
+
+        List<CodeDTO> dataTypeList = codeService.listCodeByType(Constant.Code_Type.RECORD_TYPE);
+
+        model.put("dataTypeList", dataTypeList);
+
+        return new ModelAndView("record/data", model);
+    }
+
+    @RequestMapping("searchData")
     @ResponseBody
-    public ResponseData checkRecordExist(@RequestParam("type") String type, @RequestParam("recordDateStr") String recordDateStr) {
-        logger.debug("Execute Method checkRecordExist...");
+    public List<RecordDTO> searchData(@RequestParam("type") String type,
+                                      @RequestParam("startDate") String startDate,
+                                      @RequestParam("endDate") String endDate) throws Exception {
+        logger.debug("Execute Method searchData...");
 
-        try {
-            boolean outcome = recordService.checkRecordExist(type, recordDateStr);
-            if (outcome) {
-                return new ResponseData(false);
-            }
-        } catch (Exception e) {
-            logger.error("occur a error when check reocord", e);
-            return new ResponseData(false);
-        }
-
-        return new ResponseData(true);
+        return recordService.listRecordByCriteria(type, startDate, endDate);
     }
 }
