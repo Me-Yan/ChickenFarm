@@ -27,6 +27,15 @@ public class ClassifyDTO implements Serializable {
     private Integer activeCategory;
     private Integer closedCategory;
     private String createDateStr;
+    private Integer serialNo;
+
+    public Integer getSerialNo() {
+        return serialNo;
+    }
+
+    public void setSerialNo(Integer serialNo) {
+        this.serialNo = serialNo;
+    }
 
     public String getStatus() {
         return status;

@@ -77,14 +77,24 @@ public class RecordController extends BaseController {
     }
 
     @RequestMapping("search")
-    public ModelAndView search() {
+    public ModelAndView search() throws Exception {
         logger.debug("Execute Method search...");
 
         Map<String, Object> model = Maps.newHashMap();
 
+        Calendar today = Calendar.getInstance();
+        Date end = today.getTime();
+        today.add(Calendar.YEAR, -1);
+        Date start = today.getTime();
+
+        String startDate = DateUtil.formatDate(start, CommonConstant.Pattern.YYYY_MM_DD);
+        String endDate = DateUtil.formatDate(end, CommonConstant.Pattern.YYYY_MM_DD);
+
         List<CodeDTO> dataTypeList = codeService.listCodeByType(Constant.Code_Type.RECORD_TYPE);
 
         model.put("dataTypeList", dataTypeList);
+        model.put("startDate", startDate);
+        model.put("endDate", endDate);
 
         return new ModelAndView("record/data", model);
     }
@@ -97,5 +107,49 @@ public class RecordController extends BaseController {
         logger.debug("Execute Method searchData...");
 
         return recordService.listRecordByCriteria(type, startDate, endDate);
+    }
+
+    @RequestMapping("delete")
+    @ResponseBody
+    public ResponseData delete(@RequestParam("recordId") Integer recordId) throws Exception {
+        logger.debug("Execute Method delete...");
+
+        try {
+            recordService.deleteRecordById(recordId);
+        } catch (Exception e) {
+            logger.error("occur a error when save record", e);
+            return new ResponseData(false);
+        }
+
+        return new ResponseData(true);
+    }
+
+    @RequestMapping("listSale")
+    public ModelAndView listSale() throws Exception {
+        logger.debug("Execute Method listSale...");
+
+        Map<String, Object> model = Maps.newHashMap();
+
+        Calendar today = Calendar.getInstance();
+        Date end = today.getTime();
+        today.add(Calendar.YEAR, -1);
+        Date start = today.getTime();
+
+        String startDate = DateUtil.formatDate(start, CommonConstant.Pattern.YYYY_MM_DD);
+        String endDate = DateUtil.formatDate(end, CommonConstant.Pattern.YYYY_MM_DD);
+
+        model.put("startDate", startDate);
+        model.put("endDate", endDate);
+
+        return new ModelAndView("record/sale", model);
+    }
+
+    @RequestMapping("listSaleData")
+    @ResponseBody
+    public List<RecordDTO> listSaleData(@RequestParam("startDate") String startDate,
+                                      @RequestParam("endDate") String endDate) throws Exception {
+        logger.debug("Execute Method listSaleData...");
+
+        return recordService.listRecordByCriteria(Constant.Record_Type.MORE, startDate, endDate);
     }
 }

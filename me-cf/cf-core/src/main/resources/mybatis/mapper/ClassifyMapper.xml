@@ -29,19 +29,22 @@
     </select>
 
     <select id="listAllClassify" resultType="com.me.inner.dto.ClassifyDTO">
-        SELECT
-            cf.classifyId_n AS classifyId,
-            cf.classifyName_m AS classifyName,
-            cf.classifyClass_x AS classifyClass,
-            cf.seq_c AS sequence,
-            cf.status_x AS status,
-            cf.crtOn_dt AS createDate,
-            cf.crtBy_m AS createBy,
-            DATE_FORMAT(cf.crtOn_dt, '%Y-%m-%d %H:%i') AS createDateStr,
-            (SELECT COUNT(1) FROM cf_category WHERE classifyId_n = cf.classifyId_n AND active_c = 'A') AS activeCategory,
-            (SELECT COUNT(1) FROM cf_category WHERE classifyId_n = cf.classifyId_n AND active_c = 'I') AS closedCategory
-        FROM cf_classify cf
-        ORDER BY cf.seq_c ASC
+        SELECT @rownum:=@rownum+1 AS serialNo, classify.* FROM
+        (
+            SELECT
+                cf.classifyId_n AS classifyId,
+                cf.classifyName_m AS classifyName,
+                cf.classifyClass_x AS classifyClass,
+                cf.seq_c AS sequence,
+                cf.status_x AS status,
+                cf.crtOn_dt AS createDate,
+                cf.crtBy_m AS createBy,
+                DATE_FORMAT(cf.crtOn_dt, '%Y-%m-%d %H:%i') AS createDateStr,
+                (SELECT COUNT(1) FROM cf_category WHERE classifyId_n = cf.classifyId_n AND active_c = 'A') AS activeCategory,
+                (SELECT COUNT(1) FROM cf_category WHERE classifyId_n = cf.classifyId_n AND active_c = 'I') AS closedCategory
+            FROM cf_classify cf
+            ORDER BY cf.seq_c ASC
+        ) classify, (SELECT @rownum:=0) serial
     </select>
 
     <update id="updateClassify" parameterType="com.me.inner.dto.ClassifyDTO">

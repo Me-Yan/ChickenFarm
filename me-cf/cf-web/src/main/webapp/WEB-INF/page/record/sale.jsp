@@ -25,16 +25,6 @@
     <div class="row">
         <form class="form-inline text-center" action="">
             <div class="form-group">
-                <label for="type">数据类型：</label>
-                <select name="type" id="type" class="form-control">
-                    <c:if test="${ not empty dataTypeList }">
-                        <c:forEach items="${dataTypeList}" var="code">
-                            <option value="${code.name}">${code.value}</option>
-                        </c:forEach>
-                    </c:if>
-                </select>
-            </div>
-            <div class="form-group">
                 <label for="startDate">开始时间：</label>
                 <input type="text" name="startDate" id="startDate" class="form-control flatpickr" value="${startDate}" data-default-value="${startDate}" placeholder="选择开始时间" readonly />
             </div>
@@ -100,10 +90,9 @@
     });
 
     $("#btnSearch").on("click", function () {
-        var type = $("#type").val();
         var startDate = $("#startDate").val();
         var endDate = $("#endDate").val();
-        if (type&&startDate&&endDate) {
+        if (startDate&&endDate) {
             var start = new Date(startDate);
             var end = new Date(endDate);
             start.setFullYear(start.getFullYear()+1);
@@ -127,12 +116,10 @@
     });
 
     function queryParams(params) {
-        var type = $("#type").val();
         var startDate = $("#startDate").val();
         var endDate = $("#endDate").val();
 
         return {
-            type: type,
             startDate: startDate,
             endDate: endDate
         };
@@ -140,7 +127,7 @@
 
     function initTable() {
         $("#recordTable").bootstrapTable({
-            url: '${pageContext.request.contextPath}/record/searchData',
+            url: '${pageContext.request.contextPath}/record/listSaleData',
             method: 'POST',
             cache: false,
             contentType: "application/x-www-form-urlencoded",
@@ -156,27 +143,28 @@
                     valign: 'middle'
                 },
                 {
-                    field: 'typeDisplay',
-                    title: '类型',
+                    field: 'weight',
+                    title: '重量',
                     align: 'center',
                     valign: 'middle'
                 },
                 {
-                    field: '',
-                    title: '数据',
+                    field: 'price',
+                    title: '单价',
                     align: 'center',
-                    valign: 'middle',
-                    formatter: function (value, row, index) {
-                        if ("<%=Constant.Record_Type.WEIGHT%>" === row.type) {
-                            return row.weight;
-                        } else if ("<%=Constant.Record_Type.PRICE%>" === row.type) {
-                            return row.price;
-                        } else if ("<%=Constant.Record_Type.AMOUNT%>" === row.type) {
-                            return row.amount;
-                        } else if ("<%=Constant.Record_Type.COUNT%>" === row.type) {
-                            return row.count;
-                        }
-                    }
+                    valign: 'middle'
+                },
+                {
+                    field: 'amount',
+                    title: '金额',
+                    align: 'center',
+                    valign: 'middle'
+                },
+                {
+                    field: 'description',
+                    title: '备注',
+                    align: 'center',
+                    valign: 'middle'
                 },
                 {
                     field: 'recordDateStr',

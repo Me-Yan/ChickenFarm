@@ -23,9 +23,18 @@ public class CategoryDTO implements Serializable {
     private String updateBy;
 
     // view and operation
+    private Integer serialNo;
     private String createDateStr;
     private String classifyName;
     private String status;
+
+    public Integer getSerialNo() {
+        return serialNo;
+    }
+
+    public void setSerialNo(Integer serialNo) {
+        this.serialNo = serialNo;
+    }
 
     public String getStatus() {
         return status;

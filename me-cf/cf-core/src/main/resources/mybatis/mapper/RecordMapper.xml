@@ -3,28 +3,30 @@
 <mapper namespace="com.me.inner.mapper.RecordMapper">
     
     <select id="listRecordByCriteria" parameterType="java.lang.String" resultType="com.me.inner.dto.RecordDTO">
-        SELECT
-            r.recordId_n AS recordId,
-            r.type_x AS type,
-            r.late_c AS late,
-            r.count_n AS count,
-            r.weight_n AS weight,
-            r.price_n AS price,
-            r.amount_n AS amount,
-            r.desc_x AS description,
-            r.record_dt AS recordDate,
-            DATE_FORMAT(r.record_dt, '%Y-%m-%d') AS recordDateStr,
-            r.active_c AS active,
-            r.crtBy_m AS createBy,
-            r.crtOn_dt AS createDate,
-            c.value_x AS typeDisplay
-        FROM cf_record r
-        LEFT JOIN cf_code c ON r.type_x = c.name_x
-        WHERE r.type_x = #{type} AND r.active_c = 'A'
-        <if test="startDate!=null and endDate!=null">
-            r.record_dt BETWEEN #{startDate} AND #{endDate}
-        </if>
-        ORDER BY r.record_dt DESC, r.crtOn_dt DESC
+        SELECT @rownum:=@rownum+1 AS serialNo, record.* FROM (
+            SELECT
+                r.recordId_n AS recordId,
+                r.type_x AS type,
+                r.late_c AS late,
+                r.count_n AS count,
+                r.weight_n AS weight,
+                r.price_n AS price,
+                r.amount_n AS amount,
+                r.desc_x AS description,
+                r.record_dt AS recordDate,
+                DATE_FORMAT(r.record_dt, '%Y-%m-%d') AS recordDateStr,
+                r.active_c AS active,
+                r.crtBy_m AS createBy,
+                r.crtOn_dt AS createDate,
+                c.value_x AS typeDisplay
+            FROM cf_record r
+            LEFT JOIN cf_code c ON r.type_x = c.name_x
+            WHERE r.active_c = 'A' AND r.type_x = #{type}
+            <if test="startDate!=null and endDate!=null">
+                AND r.record_dt BETWEEN #{startDate} AND #{endDate}
+            </if>
+            ORDER BY r.record_dt DESC, r.crtOn_dt DESC
+        ) record, (SELECT @rownum:=0) serial
     </select>
 
     <insert id="saveRecord" parameterType="com.me.inner.dto.RecordDTO" keyColumn="recordId_n" keyProperty="recordId" useGeneratedKeys="true">
@@ -71,7 +73,37 @@
     </update>
 
     <select id="countRecord" resultType="java.lang.Integer">
-        SELECT COUNT(1) FROM cf_record WHERE type_x = #{type, jdbcType=VARCHAR} AND DATE_FORMAT(record_dt, '%Y-%m-%d') = #{recordDate, jdbcType=TIMESTAMP}
+        SELECT COUNT(1) FROM cf_record WHERE active_c = 'A' AND type_x = #{type, jdbcType=VARCHAR} AND DATE_FORMAT(record_dt, '%Y-%m-%d') = #{recordDate, jdbcType=TIMESTAMP}
+    </select>
+
+    <update id="deleteRecordById" parameterType="java.lang.Integer">
+        UPDATE cf_record SET active_c = 'I' WHERE recordId_n = #{recordId, jdbcType=INTEGER}
+    </update>
+
+    <select id="getRecordOverview" resultType="com.me.inner.vo.RecordOverviewVO">
+        SELECT
+            ROUND(SUM(amount_n), 2) AS amount,
+            ROUND(AVG(price_n), 2) AS price,
+            ROUND(SUM(weight_n), 2) AS weight,
+            SUM(count_n) AS count
+        FROM cf_record
+        WHERE active_c = 'A' AND record_dt BETWEEN #{startDate} AND #{endDate}
+    </select>
+    
+    <select id="listRecordDate" resultType="java.lang.String">
+        SELECT DATE_FORMAT(record_dt, '%Y-%m-%d') FROM cf_record WHERE active_c = 'A' AND type_x = #{type} AND record_dt BETWEEN #{startDate} AND #{endDate} ORDER BY record_dt ASC, recordId_n ASC
+    </select>
+
+    <select id="listPrice" resultType="java.lang.Double">
+        SELECT price_n FROM cf_record WHERE active_c = 'A' AND type_x = #{type} AND record_dt BETWEEN #{startDate} AND #{endDate} ORDER BY record_dt ASC, recordId_n ASC
+    </select>
+
+    <select id="listAmount" resultType="java.lang.Double">
+        SELECT amount_n FROM cf_record WHERE active_c = 'A' AND type_x = #{type} AND record_dt BETWEEN #{startDate} AND #{endDate} ORDER BY record_dt ASC, recordId_n ASC
+    </select>
+
+    <select id="listWeight" resultType="java.lang.Double">
+        SELECT weight_n FROM cf_record WHERE active_c = 'A' AND type_x = #{type} AND record_dt BETWEEN #{startDate} AND #{endDate} ORDER BY record_dt ASC, recordId_n ASC
     </select>
 
 </mapper>

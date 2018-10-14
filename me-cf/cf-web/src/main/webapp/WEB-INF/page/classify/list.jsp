@@ -193,7 +193,6 @@
     <%-- 开放或关闭Modal --%>
 
 <script>
-    var tableIndex = 1;
     var classifyId = "";
     $(function () {
         initTable();
@@ -235,7 +234,6 @@
                 if (result.success) {
                     $("#outcomeContent").html('添加成功！');
                     $("#classifyTable").bootstrapTable("refresh");
-                    tableIndex = 1;
                 } else {
                     $("#outcomeContent").html('添加失败，请重新操作！');
                 }
@@ -277,7 +275,6 @@
                 if (result.success) {
                     $("#outcomeContent").html("修改成功！");
                     $("#classifyTable").bootstrapTable("refresh");
-                    tableIndex = 1;
                 } else {
                     $("#outcomeContent").html("修改失败！");
                 }
@@ -303,7 +300,6 @@
                 if (result.success) {
                     $("#outcomeContent").html("全部开放成功！");
                     $("#classifyTable").bootstrapTable("refresh");
-                    tableIndex = 1;
                 } else {
                     $("#outcomeContent").html("开放失败，请重新操作！");
                 }
@@ -329,7 +325,6 @@
                 if (result.success) {
                     $("#outcomeContent").html("全部关闭成功！");
                     $("#classifyTable").bootstrapTable("refresh");
-                    tableIndex = 1;
                 } else {
                     $("#outcomeContent").html("关闭失败，请重新操作！");
                 }
@@ -529,13 +524,10 @@
             uniqueId: 'classifyId',
             columns: [
                 {
-                    field: '',
+                    field: 'serialNo',
                     title: '#',
                     align: 'center',
-                    valign: 'middle',
-                    formatter: function (value, row, index) {
-                        return tableIndex++;
-                    }
+                    valign: 'middle'
                 },
                 {
                     field: 'classifyName',

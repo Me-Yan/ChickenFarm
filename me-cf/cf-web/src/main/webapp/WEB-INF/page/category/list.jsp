@@ -251,7 +251,6 @@
 </div>
 
 <script>
-    var tableIndex = 1;
     var categoryId = "";
     $(function () {
         initTable();
@@ -274,7 +273,6 @@
                 if (result.success) {
                     $("#outcomeContent").html("开放成功！");
                     $("#categoryTable").bootstrapTable("refresh");
-                    tableIndex = 1;
                 } else {
                     $("#outcomeContent").html("开放失败，请重新操作！");
                 }
@@ -300,7 +298,6 @@
                 if (result.success) {
                     $("#outcomeContent").html("关闭成功！");
                     $("#categoryTable").bootstrapTable("refresh");
-                    tableIndex = 1;
                 } else {
                     $("#outcomeContent").html("关闭失败，请重新操作！");
                 }
@@ -399,7 +396,6 @@
 
     $("#classifyName").on("change", function () {
         $("#categoryTable").bootstrapTable("refresh");
-        tableIndex = 1;
     });
 
     var classifyIdValidator = {
@@ -611,13 +607,10 @@
             uniqueId: 'categoryId',
             columns: [
                 {
-                    field: '',
+                    field: 'serialNo',
                     title: '#',
                     align: 'center',
-                    valign: 'middle',
-                    formatter: function (value, row, index) {
-                        return tableIndex++;
-                    }
+                    valign: 'middle'
                 },
                 {
                     field: 'categoryName',

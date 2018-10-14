@@ -1,11 +1,13 @@
 package com.me.inner.service;
 
+import com.google.common.collect.Lists;
 import com.me.inner.constant.CommonConstant;
 import com.me.inner.constant.Constant;
 import com.me.inner.dto.RecordDTO;
 import com.me.inner.mapper.RecordMapper;
 import com.me.inner.util.DateUtil;
 import com.me.inner.util.SecurityUtil;
+import com.me.inner.vo.RecordOverviewVO;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,18 +34,14 @@ public class RecordServiceImpl implements RecordService {
 
         Date start = null;
         Date end = null;
-        if (StringUtils.isNotBlank(startDate)) {
+        if (StringUtils.isNotBlank(startDate)&&StringUtils.isNotBlank(endDate)) {
             start = DateUtil.parseDate(startDate, CommonConstant.Pattern.YYYY_MM_DD);
-        }
-        if (StringUtils.isNotBlank(endDate)) {
             end = DateUtil.parseDate(endDate, CommonConstant.Pattern.YYYY_MM_DD);
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTime(end);
-            calendar.add(Calendar.DAY_OF_MONTH, 1);
-            end = calendar.getTime();
+
+            return recordMapper.listRecordByCriteria(type, start, end);
         }
 
-        return recordMapper.listRecordByCriteria(type, start, end);
+        return Lists.newArrayList();
     }
 
     public void saveRecord(RecordDTO record) throws Exception {
@@ -133,5 +131,122 @@ public class RecordServiceImpl implements RecordService {
             return true;
         }
         return false;
+    }
+
+    public void deleteRecordById(Integer recordId) {
+        logger.debug("Execute Method deleteRecordById");
+
+        recordMapper.deleteRecordById(recordId);
+    }
+
+    public RecordOverviewVO getCurRecordOverview() {
+        logger.debug("Execute Method getCurRecordOverview");
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+
+        Date curEnd = calendar.getTime();
+
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+        Date curStart = calendar.getTime();
+
+        return recordMapper.getRecordOverview(curStart, curEnd);
+    }
+
+    public RecordOverviewVO getPreRecordOverview() {
+        logger.debug("Execute Method getPreRecordOverview");
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+        calendar.add(Calendar.DAY_OF_MONTH, -1);
+        Date preEnd = calendar.getTime();
+
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+        Date preStart = calendar.getTime();
+
+        return recordMapper.getRecordOverview(preStart, preEnd);
+    }
+
+    public List<String> listRecentOneMonthPriceRecordDate() {
+        logger.debug("Execute Method listRecentOneMonthPriceRecordDate");
+
+        return listRecentOneMonthRecordDate(Constant.Record_Type.PRICE);
+    }
+
+    public List<String> listRecentOneMonthAmountRecordDate() {
+        logger.debug("Execute Method listRecentOneMonthAmountRecordDate");
+
+        return listRecentOneMonthRecordDate(Constant.Record_Type.AMOUNT);
+    }
+
+    public List<String> listRecentOneMonthWeightRecordDate() {
+        logger.debug("Execute Method listRecentOneMonthWeightRecordDate");
+
+        return listRecentOneMonthRecordDate(Constant.Record_Type.WEIGHT);
+    }
+
+    public List<Double> listRecentOneMonthPrice() {
+        logger.debug("Execute Method listRecentOneMonthPrice");
+
+        return listRecentOneMonthData(Constant.Record_Type.PRICE);
+    }
+
+    public List<Double> listRecentOneMonthAmount() {
+        logger.debug("Execute Method listRecentOneMonthAmount");
+
+        return listRecentOneMonthData(Constant.Record_Type.AMOUNT);
+    }
+
+    public List<Double> listRecentOneMonthWeight() {
+        logger.debug("Execute Method listRecentOneMonthWeight");
+
+        return listRecentOneMonthData(Constant.Record_Type.WEIGHT);
+    }
+
+    private List<Double> listRecentOneMonthData(String type) {
+        logger.debug("Execute Method listRecentOneMonth");
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+
+        Date endDate = calendar.getTime();
+        calendar.add(Calendar.DAY_OF_MONTH, 1);
+        calendar.add(Calendar.MONTH, -1);
+
+        Date startDate = calendar.getTime();
+
+        if (type.equals(Constant.Record_Type.PRICE)) {
+            return recordMapper.listPrice(startDate, endDate, Constant.Record_Type.PRICE);
+        } else if (type.equals(Constant.Record_Type.AMOUNT)) {
+            return recordMapper.listAmount(startDate, endDate, Constant.Record_Type.AMOUNT);
+        } else if (type.equals(Constant.Record_Type.WEIGHT)) {
+            return recordMapper.listWeight(startDate, endDate, Constant.Record_Type.WEIGHT);
+        }
+
+        return Lists.newArrayList();
+    }
+
+    private List<String> listRecentOneMonthRecordDate(String type) {
+        logger.debug("Execute Method listRecentOneMonthRecordDate");
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+
+        Date endDate = calendar.getTime();
+        calendar.add(Calendar.DAY_OF_MONTH, 1);
+        calendar.add(Calendar.MONTH, -1);
+
+        Date startDate = calendar.getTime();
+
+        return recordMapper.listRecordDate(startDate, endDate, type);
     }
 }
