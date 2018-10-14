@@ -177,7 +177,14 @@
                     name:'单价',
                     type:'line',
                     stack: '总量',
-                    data:${priceData}
+                    data:${priceData},
+                    markPoint: {
+                        symbol: 'circle',
+                        data : [
+                            {type : 'max', name: '最大值'},
+                            {type : 'min', name: '最小值'}
+                        ]
+                    }
                 }
             ]
         };
@@ -221,7 +228,14 @@
                     name:'销售额',
                     type:'line',
                     stack: '总量',
-                    data:${amountData}
+                    data:${amountData},
+                    markPoint: {
+                        symbol: 'circle',
+                        data : [
+                            {type : 'max', name: '最大值'},
+                            {type : 'min', name: '最小值'}
+                        ]
+                    }
                 }
             ]
         };
@@ -265,7 +279,14 @@
                     name:'销售额',
                     type:'line',
                     stack: '总量',
-                    data:${amountData}
+                    data:${amountData},
+                    markPoint: {
+                        symbol: 'circle',
+                        data : [
+                            {type : 'max', name: '最大值'},
+                            {type : 'min', name: '最小值'}
+                        ]
+                    }
                 }
             ]
         };
