@@ -27,11 +27,11 @@
             <input type="hidden" name="category" value="" />
             <div class="form-group">
                 <label for="startDate">开始时间：</label>
-                <input type="text" name="startDate" id="startDate" data-enable-time="false" class="form-control flatpickr" placeholder="选择开始时间" readonly />
+                <input type="text" name="startDate" id="startDate" value="${startDate}" data-default-value="${startDate}" data-enable-time="false" class="form-control flatpickr" placeholder="选择开始时间" readonly />
             </div>
             <div class="form-group">
                 <label for="endDate">结束时间：</label>
-                <input type="text" name="endDate" id="endDate" data-enable-time="false" class="form-control flatpickr" placeholder="选择结束时间" readonly />
+                <input type="text" name="endDate" id="endDate" value="${endDate}" data-default-value="${endDate}" data-enable-time="false" class="form-control flatpickr" placeholder="选择结束时间" readonly />
             </div>
             <button type="button" class="btn btn-primary">确认</button>
         </form>

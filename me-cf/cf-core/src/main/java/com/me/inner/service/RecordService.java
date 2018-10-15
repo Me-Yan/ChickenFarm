@@ -34,13 +34,13 @@ public interface RecordService {
 
     List<Double> listRecentOneMonthWeight();
 
-    List<String> listRecordDateByCriteria(Date startDate, Date endDate, String type) throws Exception;
+    List<String> listRecordDateByCriteria(String startDate, String endDate, String type) throws Exception;
 
-    List<Double> listWeightData(Date startDate, Date endDate, String type) throws Exception;
+    List<Double> listWeightData(String startDate, String endDate, String type) throws Exception;
 
-    List<Double> listPriceData(Date startDate, Date endDate, String type) throws Exception;
+    List<Double> listPriceData(String startDate, String endDate, String type) throws Exception;
 
-    List<Double> listAmountData(Date startDate, Date endDate, String type) throws Exception;
+    List<Double> listAmountData(String startDate, String endDate, String type) throws Exception;
 
-    List<Integer> listCountData(Date startDate, Date endDate, String type) throws Exception;
+    List<Integer> listCountData(String startDate, String endDate, String type) throws Exception;
 }
