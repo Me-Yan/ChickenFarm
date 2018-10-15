@@ -12,7 +12,7 @@ import java.util.Map;
  */
 public interface RecordService {
 
-    List<RecordDTO> listRecordByCriteria(String type, String startDate, String endDate) throws Exception;
+    List<RecordDTO> listRecordByCriteria(String startDate, String endDate, String type) throws Exception;
 
     void saveRecord(RecordDTO record) throws Exception;
 
@@ -33,4 +33,14 @@ public interface RecordService {
     List<Double> listRecentOneMonthAmount();
 
     List<Double> listRecentOneMonthWeight();
+
+    List<String> listRecordDateByCriteria(Date startDate, Date endDate, String type) throws Exception;
+
+    List<Double> listWeightData(Date startDate, Date endDate, String type) throws Exception;
+
+    List<Double> listPriceData(Date startDate, Date endDate, String type) throws Exception;
+
+    List<Double> listAmountData(Date startDate, Date endDate, String type) throws Exception;
+
+    List<Integer> listCountData(Date startDate, Date endDate, String type) throws Exception;
 }

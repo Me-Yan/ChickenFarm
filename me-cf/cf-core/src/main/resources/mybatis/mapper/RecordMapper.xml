@@ -106,4 +106,8 @@
         SELECT weight_n FROM cf_record WHERE active_c = 'A' AND type_x = #{type} AND record_dt BETWEEN #{startDate} AND #{endDate} ORDER BY record_dt ASC, recordId_n ASC
     </select>
 
+    <select id="listCount" resultType="java.lang.Integer">
+        SELECT count_n FROM cf_record WHERE active_c = 'A' AND type_x = #{type} AND record_dt BETWEEN #{startDate} AND #{endDate} ORDER BY record_dt ASC, recordId_n ASC
+    </select>
+
 </mapper>

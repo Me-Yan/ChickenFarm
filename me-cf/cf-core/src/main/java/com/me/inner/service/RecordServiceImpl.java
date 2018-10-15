@@ -29,16 +29,15 @@ public class RecordServiceImpl implements RecordService {
     @Autowired
     private RecordMapper recordMapper;
 
-    public List<RecordDTO> listRecordByCriteria(String type, String startDate, String endDate) throws Exception {
+    public List<RecordDTO> listRecordByCriteria(String startDate, String endDate, String type) throws Exception {
         logger.debug("Execute Method listRecordByType...");
 
-        Date start = null;
-        Date end = null;
+        Date start = null, end = null;
         if (StringUtils.isNotBlank(startDate)&&StringUtils.isNotBlank(endDate)) {
             start = DateUtil.parseDate(startDate, CommonConstant.Pattern.YYYY_MM_DD);
             end = DateUtil.parseDate(endDate, CommonConstant.Pattern.YYYY_MM_DD);
 
-            return recordMapper.listRecordByCriteria(type, start, end);
+            return recordMapper.listRecordByCriteria(start, end, type);
         }
 
         return Lists.newArrayList();
@@ -231,6 +230,36 @@ public class RecordServiceImpl implements RecordService {
         }
 
         return Lists.newArrayList();
+    }
+
+    public List<String> listRecordDateByCriteria(Date startDate, Date endDate, String type) throws Exception {
+        logger.debug("Execute Method listRecordDateByCriteria");
+
+        return recordMapper.listRecordDate(startDate, endDate, type);
+    }
+
+    public List<Double> listWeightData(Date startDate, Date endDate, String type) throws Exception {
+        logger.debug("Execute Method listWeightData");
+
+        return recordMapper.listWeight(startDate, endDate, type);
+    }
+
+    public List<Double> listPriceData(Date startDate, Date endDate, String type) throws Exception {
+        logger.debug("Execute Method listPriceData");
+
+        return recordMapper.listPrice(startDate, endDate, type);
+    }
+
+    public List<Double> listAmountData(Date startDate, Date endDate, String type) throws Exception {
+        logger.debug("Execute Method listAmountData");
+
+        return recordMapper.listAmount(startDate, endDate, type);
+    }
+
+    public List<Integer> listCountData(Date startDate, Date endDate, String type) throws Exception {
+        logger.debug("Execute Method listCountData");
+
+        return recordMapper.listCount(startDate, endDate, type);
     }
 
     private List<String> listRecentOneMonthRecordDate(String type) {

@@ -1,3 +1,4 @@
+<%@ page import="com.me.inner.constant.Constant" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
@@ -16,14 +17,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">
-                <c:choose>
-                    <c:when test="${weight eq type}">重量</c:when>
-                    <c:when test="${price eq type}">单价</c:when>
-                    <c:when test="${amount eq type}">金额</c:when>
-                    <c:when test="${count eq type}">损失数量</c:when>
-                </c:choose>
-            </h1>
+            <h1 class="page-header"><c:out value="${typeCode.value}"/></h1>
         </div>
     </div>
 
@@ -46,7 +40,7 @@
     <!-- chart详情 -->
     <div class="row" style="margin-top: 50px;">
         <div class="col-lg-12">
-            <div id="chart-weight" class="chart-weight" style="height:500px;"></div>
+            <div id="chart" style="height:500px;"></div>
         </div>
     </div>
 </div>
@@ -56,16 +50,13 @@
         $('#startDate, #endDate').flatpickr();
     });
 
-    var chartWeight = echarts.init(document.getElementById('chart-weight'));
-    var weightOptions = {
+    var chart = echarts.init(document.getElementById('chart'));
+    var chartOptions = {
         title: {
-            text: '折线图堆叠'
+            text: "${typeCode.value}"
         },
         tooltip: {
             trigger: 'axis'
-        },
-        legend: {
-            data:['邮件营销','联盟广告','视频广告','直接访问','搜索引擎']
         },
         grid: {
             left: '3%',
@@ -91,35 +82,18 @@
                 name:'邮件营销',
                 type:'line',
                 stack: '总量',
-                data:[120, 132, 101, 134, 90, 230, 210]
-            },
-            {
-                name:'联盟广告',
-                type:'line',
-                stack: '总量',
-                data:[220, 182, 191, 234, 290, 330, 310]
-            },
-            {
-                name:'视频广告',
-                type:'line',
-                stack: '总量',
-                data:[150, 232, 201, 154, 190, 330, 410]
-            },
-            {
-                name:'直接访问',
-                type:'line',
-                stack: '总量',
-                data:[320, 332, 301, 334, 390, 330, 320]
-            },
-            {
-                name:'搜索引擎',
-                type:'line',
-                stack: '总量',
-                data:[820, 932, 901, 934, 1290, 1330, 1320]
+                data:[120, 132, 101, 134, 90, 230, 210],
+                markPoint: {
+                    symbol: 'circle',
+                    data : [
+                        {type : 'max', name: '最大值'},
+                        {type : 'min', name: '最小值'}
+                    ]
+                }
             }
         ]
     };
-    chartWeight.setOption(weightOptions);
+    chart.setOption(chartOptions);
 </script>
 
 </body>

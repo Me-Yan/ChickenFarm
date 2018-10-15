@@ -145,13 +145,10 @@
         var price = echarts.init(document.getElementById('recentPrice'));
         var priceOption = {
             title: {
-                text: '单价'
+                text: '单价（￥）'
             },
             tooltip: {
                 trigger: 'axis'
-            },
-            legend: {
-                data:[]
             },
             grid: {
                 left: '3%',
@@ -196,13 +193,10 @@
         var amount = echarts.init(document.getElementById('recentAmount'));
         var amountOption = {
             title: {
-                text: '销售额'
+                text: '销售额（￥）'
             },
             tooltip: {
                 trigger: 'axis'
-            },
-            legend: {
-                data:[]
             },
             grid: {
                 left: '3%',
@@ -247,13 +241,10 @@
         var weight = echarts.init(document.getElementById('recentWeight'));
         var weightOption = {
             title: {
-                text: '销售额'
+                text: '销量（斤）'
             },
             tooltip: {
                 trigger: 'axis'
-            },
-            legend: {
-                data:[]
             },
             grid: {
                 left: '3%',
@@ -276,7 +267,7 @@
             },
             series: [
                 {
-                    name:'销售额',
+                    name:'销量',
                     type:'line',
                     stack: '总量',
                     data:${amountData},

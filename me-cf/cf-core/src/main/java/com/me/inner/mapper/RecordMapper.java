@@ -12,7 +12,7 @@ import java.util.List;
  */
 public interface RecordMapper {
 
-    List<RecordDTO> listRecordByCriteria(@Param("type") String type, @Param("startDate") Date startDate, @Param("endDate") Date endDate);
+    List<RecordDTO> listRecordByCriteria(@Param("startDate") Date startDate, @Param("endDate") Date endDate, @Param("type") String type);
 
     void saveRecord(RecordDTO record);
 
@@ -31,4 +31,6 @@ public interface RecordMapper {
     List<Double> listAmount(@Param("startDate") Date startDate, @Param("endDate") Date endDate, @Param("type") String type);
 
     List<Double> listWeight(@Param("startDate") Date startDate, @Param("endDate") Date endDate, @Param("type") String type);
+
+    List<Integer> listCount(@Param("startDate") Date startDate, @Param("endDate") Date endDate, @Param("type") String type);
 }

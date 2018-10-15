@@ -43,22 +43,81 @@ public class RecordController extends BaseController {
         logger.debug("Execute Method listWeight...");
         Map<String, Object> model = Maps.newHashMap();
 
-        model.put("type", type);
+        CodeDTO typeCode = codeService.getCodeByTypeAndName(Constant.Code_Type.RECORD_TYPE, type);
 
-        model.put(Constant.Record_Type.WEIGHT, Constant.Record_Type.WEIGHT);
-        model.put(Constant.Record_Type.PRICE, Constant.Record_Type.PRICE);
-        model.put(Constant.Record_Type.AMOUNT, Constant.Record_Type.AMOUNT);
-        model.put(Constant.Record_Type.COUNT, Constant.Record_Type.COUNT);
+        model.put("typeCode", typeCode);
 
         return new ModelAndView("record/list", model);
     }
 
-    @RequestMapping("listData")
+    @RequestMapping("listRecordDateData")
     @ResponseBody
-    public List<RecordDTO> listData(@RequestParam("type") String type) throws Exception {
-        logger.debug("Execute Method listData...");
+    public List<String> listRecordDateData(@RequestParam("type") String type,
+                                 @RequestParam("startDate") String startDate,
+                                 @RequestParam("endDate") String endDate) throws Exception {
+        logger.debug("Execute Method listRecordDateData...");
 
-        return recordService.listRecordByCriteria(type, null, null);
+        Date start = null, end = null;
+
+        parseStartDateAndEndDate(startDate, endDate, start, end);
+
+        return recordService.listRecordDateByCriteria(start, end, type);
+    }
+
+    @RequestMapping("listWeightData")
+    @ResponseBody
+    public List<Double> listWeightData(@RequestParam("type") String type,
+                                       @RequestParam("startDate") String startDate,
+                                       @RequestParam("endDate") String endDate) throws Exception {
+        logger.debug("Execute Method listRecordData...");
+
+        Date start = null, end = null;
+
+        parseStartDateAndEndDate(startDate, endDate, start, end);
+
+        return recordService.listWeightData(start, end, type);
+    }
+
+    @RequestMapping("listPriceData")
+    @ResponseBody
+    public List<Double> listPriceData(@RequestParam("type") String type,
+                                       @RequestParam("startDate") String startDate,
+                                       @RequestParam("endDate") String endDate) throws Exception {
+        logger.debug("Execute Method listPriceData...");
+
+        Date start = null, end = null;
+
+        parseStartDateAndEndDate(startDate, endDate, start, end);
+
+        return recordService.listPriceData(start, end, type);
+    }
+
+    @RequestMapping("listAmountData")
+    @ResponseBody
+    public List<Double> listAmountData(@RequestParam("type") String type,
+                                       @RequestParam("startDate") String startDate,
+                                       @RequestParam("endDate") String endDate) throws Exception {
+        logger.debug("Execute Method listAmountData...");
+
+        Date start = null, end = null;
+
+        parseStartDateAndEndDate(startDate, endDate, start, end);
+
+        return recordService.listAmountData(start, end, type);
+    }
+
+    @RequestMapping("listCountData")
+    @ResponseBody
+    public List<Integer> listCountData(@RequestParam("type") String type,
+                                       @RequestParam("startDate") String startDate,
+                                       @RequestParam("endDate") String endDate) throws Exception {
+        logger.debug("Execute Method listCountData...");
+
+        Date start = null, end = null;
+
+        parseStartDateAndEndDate(startDate, endDate, start, end);
+
+        return recordService.listCountData(start, end, type);
     }
 
     @RequestMapping("newRecord")
@@ -150,6 +209,24 @@ public class RecordController extends BaseController {
                                       @RequestParam("endDate") String endDate) throws Exception {
         logger.debug("Execute Method listSaleData...");
 
-        return recordService.listRecordByCriteria(Constant.Record_Type.MORE, startDate, endDate);
+        return recordService.listRecordByCriteria(startDate, endDate, Constant.Record_Type.MORE);
+    }
+
+    private void parseStartDateAndEndDate(String startDate, String endDate, Date start, Date end) throws Exception {
+        if (StringUtils.isNotBlank(startDate)&&StringUtils.isNotBlank(endDate)) {
+            start = DateUtil.parseDate(startDate, CommonConstant.Pattern.YYYY_MM_DD);
+            end = DateUtil.parseDate(endDate, CommonConstant.Pattern.YYYY_MM_DD);
+        } else {
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(Calendar.HOUR_OF_DAY, 0);
+            calendar.set(Calendar.MINUTE, 0);
+            calendar.set(Calendar.MILLISECOND, 0);
+
+            end = calendar.getTime();
+            calendar.add(Calendar.DAY_OF_MONTH, 1);
+            calendar.add(Calendar.MONTH, -1);
+
+            start = calendar.getTime();
+        }
     }
 }
