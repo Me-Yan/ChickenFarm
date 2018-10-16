@@ -260,7 +260,7 @@
             xAxis: {
                 type: 'category',
                 boundaryGap: false,
-                data: ${amountRecordDateData}
+                data: ${weightRecordDateData}
             },
             yAxis: {
                 type: 'value'
@@ -270,7 +270,7 @@
                     name:'销量',
                     type:'line',
                     stack: '总量',
-                    data:${amountData},
+                    data:${weightData},
                     markPoint: {
                         symbol: 'circle',
                         data : [

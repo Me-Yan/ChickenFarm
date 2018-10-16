@@ -2,6 +2,7 @@ package com.me.inner.controller;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.google.gson.Gson;
 import com.me.inner.constant.CommonConstant;
 import com.me.inner.constant.Constant;
 import com.me.inner.dto.CodeDTO;
@@ -51,6 +52,7 @@ public class RecordController extends BaseController {
         Date end = calendar.getTime();
         calendar.add(Calendar.DAY_OF_MONTH, 1);
         calendar.add(Calendar.MONTH, -1);
+        calendar.add(Calendar.DAY_OF_MONTH, -1);
 
         Date start = calendar.getTime();
 
@@ -63,54 +65,33 @@ public class RecordController extends BaseController {
         return new ModelAndView("record/list", model);
     }
 
-    @RequestMapping("listRecordDateData")
+    @RequestMapping("listRecordData")
     @ResponseBody
-    public List<String> listRecordDateData(@RequestParam("type") String type,
+    public Map<String, String> listRecordDateData(@RequestParam("type") String type,
                                  @RequestParam("startDate") String startDate,
                                  @RequestParam("endDate") String endDate) throws Exception {
         logger.debug("Execute Method listRecordDateData...");
 
-        return recordService.listRecordDateByCriteria(startDate, endDate, type);
-    }
+        Map<String, String> resultData = Maps.newHashMap();
+        List<String> recordDateData = recordService.listRecordDateByCriteria(startDate, endDate, type);
+        resultData.put("recordDateData", new Gson().toJson(recordDateData));
+        if (type.equals(Constant.Record_Type.PRICE)) {
+            List<Double> recordData = recordService.listPriceData(startDate, endDate, type);
+            resultData.put("recordData", new Gson().toJson(recordData));
+        } else if (type.equals(Constant.Record_Type.WEIGHT)) {
+            List<Double> recordData = recordService.listWeightData(startDate, endDate, type);
+            resultData.put("recordData", new Gson().toJson(recordData));
+        } else if (type.equals(Constant.Record_Type.AMOUNT)) {
+            List<Double> recordData = recordService.listAmountData(startDate, endDate, type);
+            resultData.put("recordData", new Gson().toJson(recordData));
+        } else if (type.equals(Constant.Record_Type.COUNT)) {
+            List<Integer> recordData = recordService.listCountData(startDate, endDate, type);
+            resultData.put("recordData", new Gson().toJson(recordData));
+        } else {
+            resultData.put("recordData", new Gson().toJson(Lists.newArrayList()));
+        }
 
-    @RequestMapping("listWeightData")
-    @ResponseBody
-    public List<Double> listWeightData(@RequestParam("type") String type,
-                                       @RequestParam("startDate") String startDate,
-                                       @RequestParam("endDate") String endDate) throws Exception {
-        logger.debug("Execute Method listRecordData...");
-
-        return recordService.listWeightData(startDate, endDate, type);
-    }
-
-    @RequestMapping("listPriceData")
-    @ResponseBody
-    public List<Double> listPriceData(@RequestParam("type") String type,
-                                       @RequestParam("startDate") String startDate,
-                                       @RequestParam("endDate") String endDate) throws Exception {
-        logger.debug("Execute Method listPriceData...");
-
-        return recordService.listPriceData(startDate, endDate, type);
-    }
-
-    @RequestMapping("listAmountData")
-    @ResponseBody
-    public List<Double> listAmountData(@RequestParam("type") String type,
-                                       @RequestParam("startDate") String startDate,
-                                       @RequestParam("endDate") String endDate) throws Exception {
-        logger.debug("Execute Method listAmountData...");
-
-        return recordService.listAmountData(startDate, endDate, type);
-    }
-
-    @RequestMapping("listCountData")
-    @ResponseBody
-    public List<Integer> listCountData(@RequestParam("type") String type,
-                                       @RequestParam("startDate") String startDate,
-                                       @RequestParam("endDate") String endDate) throws Exception {
-        logger.debug("Execute Method listCountData...");
-
-        return recordService.listCountData(startDate, endDate, type);
+        return resultData;
     }
 
     @RequestMapping("newRecord")

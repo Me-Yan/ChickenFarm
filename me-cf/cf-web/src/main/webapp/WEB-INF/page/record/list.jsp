@@ -33,7 +33,7 @@
                 <label for="endDate">结束时间：</label>
                 <input type="text" name="endDate" id="endDate" value="${endDate}" data-default-value="${endDate}" data-enable-time="false" class="form-control flatpickr" placeholder="选择结束时间" readonly />
             </div>
-            <button type="button" class="btn btn-primary">确认</button>
+            <button type="button" class="btn btn-primary" id="btnSearch">确认</button>
         </form>
     </div>
 
@@ -45,55 +45,127 @@
     </div>
 </div>
 
+<%-- 结果Modal --%>
+<div class="modal fade" id="outcomeModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">提示</h4>
+            </div>
+            <div class="modal-body">
+                <p class="text-center" id="outcomeContent"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
+    var chart;
+    var recordData = [];
+    var recordDateData = [];
     $(function () {
         $('#startDate, #endDate').flatpickr();
-    });
 
-    var chart = echarts.init(document.getElementById('chart'));
-    var chartOptions = {
-        title: {
-            text: "${typeCode.value}"
-        },
-        tooltip: {
-            trigger: 'axis'
-        },
-        grid: {
-            left: '3%',
-            right: '4%',
-            bottom: '3%',
-            containLabel: true
-        },
-        toolbox: {
-            feature: {
-                saveAsImage: {}
+        initChart();
+    });
+    
+    $("#btnSearch").on("click", function () {
+        var startDate = $("#startDate").val();
+        var endDate = $("#endDate").val();
+        if (startDate&&endDate) {
+            var start = new Date(startDate);
+            var end = new Date(endDate);
+            start.setMonth(start.getMonth()+1);
+            start.setDate(start.getDate()+1);
+            if (start.getTime()<=end.getTime()) {
+                $("#outcomeContent").html("时间范围不能超过1个月.");
+                $("#outcomeModal").modal("show");
+            } else {
+                initChart();
             }
-        },
-        xAxis: {
-            type: 'category',
-            boundaryGap: false,
-            data: ['周一','周二','周三','周四','周五','周六','周日']
-        },
-        yAxis: {
-            type: 'value'
-        },
-        series: [
-            {
-                name:'邮件营销',
-                type:'line',
-                stack: '总量',
-                data:[120, 132, 101, 134, 90, 230, 210],
-                markPoint: {
-                    symbol: 'circle',
-                    data : [
-                        {type : 'max', name: '最大值'},
-                        {type : 'min', name: '最小值'}
-                    ]
+        } else {
+            if (!startDate&&endDate) {
+                $("#outcomeContent").html("请选择开始时间.");
+            } else if (startDate&&!endDate) {
+                $("#outcomeContent").html("请选择结束时间.");
+            } else {
+                $("#outcomeContent").html("请选择开始时间和结束时间.");
+            }
+            $("#outcomeModal").modal("show");
+        }
+    })
+
+    chart = echarts.init(document.getElementById('chart'));
+    function initChart() {
+        $.ajax({
+            url: "${pageContext.request.contextPath}/record/listRecordData",
+            data: {
+                type: "${typeCode.name}",
+                startDate: $("#startDate").val(),
+                endDate: $("#endDate").val()
+            },
+            type: "POST",
+            success: function (result) {
+                if (result) {
+                    recordData = JSON.parse(result.recordData);
+                    recordDateData = JSON.parse(result.recordDateData);
                 }
+
+                var chartOptions = {
+                    title: {
+                        text: "${typeCode.value}"
+                    },
+                    tooltip: {
+                        trigger: 'axis'
+                    },
+                    grid: {
+                        left: '3%',
+                        right: '4%',
+                        bottom: '3%',
+                        containLabel: true
+                    },
+                    toolbox: {
+                        feature: {
+                            saveAsImage: {}
+                        }
+                    },
+                    xAxis: {
+                        type: 'category',
+                        boundaryGap: false,
+                        data: recordDateData
+                    },
+                    yAxis: {
+                        type: 'value'
+                    },
+                    series: [
+                        {
+                            name:'${typeCode.value}',
+                            type:'line',
+                            stack: '总量',
+                            data:recordData,
+                            markPoint: {
+                                symbol: 'circle',
+                                data : [
+                                    {type : 'max', name: '最大值'},
+                                    {type : 'min', name: '最小值'}
+                                ]
+                            }
+                        }
+                    ],
+                    noDataLoadingOption: {},
+                };
+                chart.showLoading();
+                setTimeout(function () {
+                    chart.hideLoading();
+                    chart.setOption(chartOptions);
+                }, 500);
             }
-        ]
-    };
-    chart.setOption(chartOptions);
+        });
+    }
 </script>
 
 </body>
